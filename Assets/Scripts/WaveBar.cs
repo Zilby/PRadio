@@ -16,6 +16,10 @@ public class WaveBar : MonoBehaviour {
         if (this.spRenderer == null) {
             this.spRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
+        if (yVal < 0) {
+            this.spRenderer.flipY = true;
+            yVal = Mathf.Abs(yVal);
+        }
         int index = Mathf.FloorToInt(yVal);
         index = Mathf.Min(index, barSprites.Count);
         this.spRenderer.sprite = barSprites[index];
