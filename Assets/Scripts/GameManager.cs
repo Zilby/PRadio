@@ -56,15 +56,9 @@ public class GameManager : MonoBehaviour {
         board.Activated = true;
     }
 
-    private void DisplayText() {
-        listenersText.text = listeners.ToString();
-        popText.text = popularity.ToString();
-        riskText.text = risk.ToString();
-    }
-
     private void ControlGamePhase() {
         this.risk = this.reputation * this.board.Distance;
-        this.listeners = Mathf.FloorToInt(this.board.PercentageCorrect() * this.board.Distance);
+        this.listeners = Mathf.CeilToInt(this.board.PercentageCorrect() * this.board.Distance);
         this.popularity = this.reputation * this.listeners;
         DisplayText();
 
@@ -73,6 +67,12 @@ public class GameManager : MonoBehaviour {
         } else if (this.popularity > this.targetPopularity) {
             this.WinCondition();
         }
+    }
+
+    private void DisplayText() {
+        listenersText.text = listeners.ToString();
+        popText.text = popularity.ToString();
+        riskText.text = risk.ToString();
     }
 
     public void Pause() {
