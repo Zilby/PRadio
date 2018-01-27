@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BoardController : MonoBehaviour {
 
@@ -9,7 +10,9 @@ public class BoardController : MonoBehaviour {
     public Slider amplitudeSlider;
     public Slider impedanceSlider;
     public Slider distanceSlider;
+    public TextMeshProUGUI temperatureText;
     public SineWaveSpawner waveSpawner;
+	public Transform impedanceLine;
 
     /// <summary>
     /// The current temperature. 
@@ -18,8 +21,8 @@ public class BoardController : MonoBehaviour {
     /// </summary>
     private float temperature = 0;
     private const float MAX_TEMPERATURE = 100f;
-    private const float COOLDOWN_RATE = 0.5f;
-    private const float TEMPERATURE_CHANGE_RATE = 1.0F;
+    private const float COOLDOWN_RATE = 1.0f;
+    private const float TEMPERATURE_CHANGE_RATE = 1.0f;
 
     /// <summary>
     /// The current impedance
@@ -88,10 +91,11 @@ public class BoardController : MonoBehaviour {
     private IEnumerator SetTemperature() {
         while (activated) {
             yield return new WaitForSeconds(TEMPERATURE_CHANGE_RATE);
-            power = distance + (Mathf.Abs(targetImpedance - impedance)) / Mathf.Max(maxAmplitude, maxFrequency)
+            power = distance + (Mathf.Abs(targetImpedance - impedance)) / Mathf.Max(targetAmplitude, targetFrequency)
                 + (interactionCounter > 0 ? INTERACTION_POWER_INCREASE : 0);
-            temperature += power - 0.5f;
+            temperature += power - COOLDOWN_RATE;
             temperature = Mathf.Max(0, temperature);
+            temperatureText.text = temperature.ToString();
         }
     }
 
@@ -123,9 +127,10 @@ public class BoardController : MonoBehaviour {
     public void RandomizeImpedance() {
         this.targetImpedance = Random.Range(Mathf.Min(this.targetFrequency, this.targetAmplitude),
             Mathf.Max(this.targetFrequency, this.targetAmplitude));
-    }
+		SetImpedenceCurrentPosition();
+	}
 
-    void Awake() {
+	void Awake() {
         this.RandomizeValues();
     }
 
@@ -150,10 +155,18 @@ public class BoardController : MonoBehaviour {
 
     public void ModifyImpedance(float amount) {
         interactionCounter = INTERACTION_TIMER;
-        this.impedance = amount;
-    }
+		// Amount * the possible target range + minimum value. 
+        this.impedance = (amount * ((Mathf.Max(targetFrequency, targetAmplitude)) - Mathf.Min(targetAmplitude, targetFrequency)))
+			+ Mathf.Min(targetAmplitude, targetFrequency);
+		SetImpedenceCurrentPosition();
+	}
 
-    public float PercentageCorrect() {
+	private void SetImpedenceCurrentPosition()
+	{
+		impedanceLine.localPosition = new Vector3(0, Mathf.Clamp((targetImpedance - impedance) * 10.0f, -27, 27), 0);
+	}
+
+	public float PercentageCorrect() {
         return (this.amplitude / this.targetAmplitude + this.frequency / this.targetFrequency) / 2.0f;
     }
 

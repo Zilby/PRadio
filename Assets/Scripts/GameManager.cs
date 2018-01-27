@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,7 +10,11 @@ public class GameManager : MonoBehaviour {
     const float RISK_OFFSET = 1000.0f;
     const float POP_OFFSET = 2000.0f;
 
+    public ObjectPooler pooler;
     public BoardController board;
+    public TextMeshProUGUI listenersText;
+    public TextMeshProUGUI riskText;
+    public TextMeshProUGUI popText;
 
     private int day;
 
@@ -29,6 +34,10 @@ public class GameManager : MonoBehaviour {
     private int listeners;
 
     // Use this for initialization
+
+    void Awake() {
+        Instantiate(pooler);
+    }
     void Start() {
         this.SetupGamePhase();
     }
@@ -44,13 +53,14 @@ public class GameManager : MonoBehaviour {
         this.maxRisk = reputation * RISK_OFFSET / (day * DIFFICULTY_MODIFIER);
         this.targetPopularity = reputation * POP_OFFSET / (day * DIFFICULTY_MODIFIER);
         this.board.RandomizeValues();
-        // activate board
+        board.Activated = true;
     }
 
     private void ControlGamePhase() {
         this.risk = this.reputation * this.board.Distance;
-        this.listeners = Mathf.FloorToInt(this.board.PercentageCorrect() * this.board.Distance);
+        this.listeners = Mathf.CeilToInt(this.board.PercentageCorrect() * this.board.Distance);
         this.popularity = this.reputation * this.listeners;
+        DisplayText();
 
         if (this.board.Overheated() || this.risk > this.maxRisk) {
             this.LoseCondition();
@@ -59,13 +69,19 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void DisplayText() {
+        listenersText.text = listeners.ToString();
+        popText.text = popularity.ToString();
+        riskText.text = risk.ToString();
+    }
+
     public void Pause() {
         Time.timeScale = 0.0f;
     }
 
     private void WinCondition() {
         Pause();
-        // deactivate board
+        board.Activated = false;
         // Fade to black code
         // Show good job
         Debug.Log("Win!!");
@@ -74,7 +90,7 @@ public class GameManager : MonoBehaviour {
 
     private void LoseCondition() {
         Pause();
-        // deactivate board
+        board.Activated = false;
         // fade to black code
         // you lose
         Debug.Log("Lose!");
