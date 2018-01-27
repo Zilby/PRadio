@@ -18,6 +18,7 @@ The p definitely doesn't stand for sketchy content - GGJ 2018
 - To make a new branch enter `git checkout -b _new_branch_title_`. This command creates your new branch locally. To push your new branch to the remote server enter `git push -u origin _new_branch_title_`
 - The default branch is `master`, this branch is the main branch for the project and should more or less not be modified directly (outside of smaller edits). 
 - To switch between branches, use the `git checkout` command. Eg: `git checkout master` will change your branch to master. `git checkout _your_branch_title_` will switch your current local branch to yours. You will need to do this after making a new branch as well. 
+- If you need access to another teammate's branches, you can use `git fetch` to pull access to all of the remote branches down from the repository. 
 
 # Merging in your branch
 - To update your branch to the most recent changes from master, first make sure you're on your branch and that it's updated (use `git pull`), and then use `git merge origin/master`. This may create conflicts! If you need help resolving conflicts, come to Alex. 
