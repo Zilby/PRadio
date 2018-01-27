@@ -12,6 +12,7 @@ public class BoardController : MonoBehaviour {
     public Slider distanceSlider;
     public TextMeshProUGUI temperatureText;
     public SineWaveSpawner waveSpawner;
+	public Transform impedanceLine;
 
     /// <summary>
     /// The current temperature. 
@@ -126,9 +127,10 @@ public class BoardController : MonoBehaviour {
     public void RandomizeImpedance() {
         this.targetImpedance = Random.Range(Mathf.Min(this.targetFrequency, this.targetAmplitude),
             Mathf.Max(this.targetFrequency, this.targetAmplitude));
-    }
+		SetImpedenceCurrentPosition();
+	}
 
-    void Awake() {
+	void Awake() {
         this.RandomizeValues();
     }
 
@@ -153,10 +155,18 @@ public class BoardController : MonoBehaviour {
 
     public void ModifyImpedance(float amount) {
         interactionCounter = INTERACTION_TIMER;
-        this.impedance = amount;
-    }
+		// Amount * the possible target range + minimum value. 
+        this.impedance = (amount * ((Mathf.Max(targetFrequency, targetAmplitude)) - Mathf.Min(targetAmplitude, targetFrequency)))
+			+ Mathf.Min(targetAmplitude, targetFrequency);
+		SetImpedenceCurrentPosition();
+	}
 
-    public float PercentageCorrect() {
+	private void SetImpedenceCurrentPosition()
+	{
+		impedanceLine.localPosition = new Vector3(0, Mathf.Clamp((targetImpedance - impedance) * 10.0f, -27, 27), 0);
+	}
+
+	public float PercentageCorrect() {
         return (this.amplitude / this.targetAmplitude + this.frequency / this.targetFrequency) / 2.0f;
     }
 
