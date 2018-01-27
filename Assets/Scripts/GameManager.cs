@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ControlGamePhase() {
-        this.risk = this.reputation * this.board.GetDistance();
-        this.listeners = Mathf.FloorToInt(this.board.PercentageCorrect() * this.board.GetDistance());
+        this.risk = this.reputation * this.board.Distance;
+        this.listeners = Mathf.FloorToInt(this.board.PercentageCorrect() * this.board.Distance);
         this.popularity = this.reputation * this.listeners;
 
         if (this.board.Overheated() || this.risk > this.maxRisk) {

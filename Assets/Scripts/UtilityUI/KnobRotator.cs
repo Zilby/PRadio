@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class KnobRotator : MonoBehaviour {
@@ -13,6 +12,6 @@ public class KnobRotator : MonoBehaviour {
 
 	private void SetRotation(float value)
 	{
-		transform.rotation = Quaternion.Euler(new Vector3(0, 0, value * 180f - 90f));
+		transform.rotation = Quaternion.Euler(new Vector3(0, 0, value * 180f));
 	}
 }
