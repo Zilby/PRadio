@@ -19,6 +19,6 @@ public class WaveBar : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        this.transform.Translate(new Vector3(this.moveSpeed * Time.time, 0, 0));
+        this.transform.Translate(new Vector3(this.moveSpeed * Time.deltaTime, 0, 0));
     }
 }
