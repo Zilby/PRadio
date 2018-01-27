@@ -12,7 +12,10 @@ public class BoardController : MonoBehaviour {
     public Slider distanceSlider;
     public TextMeshProUGUI temperatureText;
     public SineWaveSpawner waveSpawner;
-	public Transform impedanceLine;
+    public Transform impedanceLine;
+
+    public AudioSource staticAudio;
+    public AudioSource musicAudio;
 
     /// <summary>
     /// The current temperature. 
@@ -74,11 +77,16 @@ public class BoardController : MonoBehaviour {
         get { return distance; }
     }
 
+    void Awake() {
+        this.RandomizeValues();
+    }
+
     public void Start() {
         AssignViewEvents();
         waveSpawner.amplitude = amplitude;
         waveSpawner.frequency = frequency;
         StartCoroutine(ReduceInteractionPower());
+        SetAudio();
     }
 
     private void AssignViewEvents() {
@@ -86,6 +94,11 @@ public class BoardController : MonoBehaviour {
         amplitudeSlider.onValueChanged.AddListener(ModifyAmplitude);
         impedanceSlider.onValueChanged.AddListener(ModifyImpedance);
         distanceSlider.onValueChanged.AddListener(ModifyDistance);
+    }
+
+    private void SetAudio() {
+        this.staticAudio.volume = PercentageWrong();
+        this.musicAudio.volume = 1 - PercentageWrong();
     }
 
     private IEnumerator SetTemperature() {
@@ -127,11 +140,7 @@ public class BoardController : MonoBehaviour {
     public void RandomizeImpedance() {
         this.targetImpedance = Random.Range(Mathf.Min(this.targetFrequency, this.targetAmplitude),
             Mathf.Max(this.targetFrequency, this.targetAmplitude));
-		SetImpedenceCurrentPosition();
-	}
-
-	void Awake() {
-        this.RandomizeValues();
+        SetImpedenceCurrentPosition();
     }
 
     public void ModifyFrequency(float amount) {
@@ -139,6 +148,7 @@ public class BoardController : MonoBehaviour {
         interactionCounter = INTERACTION_TIMER;
         this.RandomizeImpedance();
         waveSpawner.frequency = frequency;
+        SetAudio();
     }
 
     public void ModifyAmplitude(float amount) {
@@ -146,6 +156,7 @@ public class BoardController : MonoBehaviour {
         interactionCounter = INTERACTION_TIMER;
         this.RandomizeImpedance();
         waveSpawner.amplitude = amplitude;
+        SetAudio();
     }
 
     public void ModifyDistance(float amount) {
@@ -155,19 +166,25 @@ public class BoardController : MonoBehaviour {
 
     public void ModifyImpedance(float amount) {
         interactionCounter = INTERACTION_TIMER;
-		// Amount * the possible target range + minimum value. 
+        // Amount * the possible target range + minimum value. 
         this.impedance = (amount * ((Mathf.Max(targetFrequency, targetAmplitude)) - Mathf.Min(targetAmplitude, targetFrequency)))
-			+ Mathf.Min(targetAmplitude, targetFrequency);
-		SetImpedenceCurrentPosition();
-	}
+            + Mathf.Min(targetAmplitude, targetFrequency);
+        SetImpedenceCurrentPosition();
+    }
 
-	private void SetImpedenceCurrentPosition()
-	{
-		impedanceLine.localPosition = new Vector3(0, Mathf.Clamp((targetImpedance - impedance) * 10.0f, -27, 27), 0);
-	}
+    private void SetImpedenceCurrentPosition() {
+        impedanceLine.localPosition = new Vector3(0, Mathf.Clamp((targetImpedance - impedance) * 10.0f, -27, 27), 0);
+    }
 
-	public float PercentageCorrect() {
-        return (this.amplitude / this.targetAmplitude + this.frequency / this.targetFrequency) / 2.0f;
+    public float PercentageWrong() {
+        float wrong = (Mathf.Abs(targetAmplitude - amplitude) / targetAmplitude + Mathf.Abs(targetFrequency - frequency) / targetFrequency) / 2.0f;
+        if (wrong < 0) {
+            return 0;
+        }
+        if (wrong > 1) {
+            return 1;
+        }
+        return wrong;
     }
 
     public bool Overheated() {

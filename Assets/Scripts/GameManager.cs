@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI listenersText;
     public TextMeshProUGUI riskText;
     public TextMeshProUGUI popText;
+    public AudioSource sirenAudio;
 
     private int day;
 
@@ -58,9 +59,11 @@ public class GameManager : MonoBehaviour {
 
     private void ControlGamePhase() {
         this.risk = this.reputation * this.board.Distance;
-        this.listeners = Mathf.CeilToInt(this.board.PercentageCorrect() * this.board.Distance);
+        this.listeners = Mathf.CeilToInt((1 - this.board.PercentageWrong()) * this.board.Distance);
         this.popularity = this.reputation * this.listeners;
         DisplayText();
+
+        this.sirenAudio.volume = this.risk / this.maxRisk;
 
         if (this.board.Overheated() || this.risk > this.maxRisk) {
             this.LoseCondition();
