@@ -24,9 +24,8 @@ public class ObjectPooler : MonoBehaviour {
             Destroy(instance.gameObject);
             instance = this;
         }
-    }
 
-    void Start() {
+
         pooledObjects = new Dictionary<string, List<GameObject>>();
         foreach (ObjectPoolItem item in itemsToPool) {
             pooledObjects[item.objectToPool.tag] = new List<GameObject>();
@@ -37,6 +36,7 @@ public class ObjectPooler : MonoBehaviour {
             }
         }
     }
+
 
     void Update() {
         foreach (KeyValuePair<string, List<GameObject>> objects in pooledObjects) {

@@ -6,7 +6,7 @@ public class WaveBar : MonoBehaviour {
 
     public List<Sprite> barSprites;
 
-    public float stepSize;
+    private float stepSize;
     private int hSteps;
 	private float stepTime;
 
@@ -25,7 +25,8 @@ public class WaveBar : MonoBehaviour {
         this.spRenderer.sprite = barSprites[index];
     }
 
-	public WaveBar Init(int hSteps, float stepTime) {
+	public WaveBar Init(int hSteps, float stepTime, float stepSize) {
+		this.stepSize = stepSize;
 		this.hSteps = hSteps;
 		this.stepTime = stepTime;
 		return this;
