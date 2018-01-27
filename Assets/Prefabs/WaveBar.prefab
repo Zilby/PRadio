@@ -36,7 +36,7 @@ Transform:
   m_GameObject: {fileID: 1037230260980922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.65, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,24 +53,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barSprites:
-  - {fileID: 21300000, guid: d8ec104abbcdbdf46aaec6a17e52437f, type: 3}
-  - {fileID: 21300000, guid: dbfa3371e20c62c498040620a40e0be4, type: 3}
-  - {fileID: 21300000, guid: 0d79532534dbc834485d2083fa3c4d8a, type: 3}
-  - {fileID: 21300000, guid: 28742eeb9e68469469cdf1875981836d, type: 3}
-  - {fileID: 21300000, guid: 82b3db1252c02c14783bfaacf8b00066, type: 3}
-  - {fileID: 21300000, guid: baded520d1604b84ca7be05bd88933f6, type: 3}
-  - {fileID: 21300000, guid: 83ba496f151404e4a8f4471bc2f32e88, type: 3}
-  - {fileID: 21300000, guid: d02b11ac993b52641b6fb4b0aac08041, type: 3}
-  - {fileID: 21300000, guid: 8a794e99339871a4c91c0e83a698e340, type: 3}
-  - {fileID: 21300000, guid: ffa45b6f3f335c84f8b836ce37b0ad77, type: 3}
-  - {fileID: 21300000, guid: dcc23421bb34a3741a9ca74df9de5a49, type: 3}
-  - {fileID: 21300000, guid: 4b9229f6ae0fb0c47a0918ae9e0dcf99, type: 3}
-  - {fileID: 21300000, guid: 1fe2e95c28b4cbf43a4be4a65de66c3f, type: 3}
-  - {fileID: 21300000, guid: 9df761a266f4e274dabe13164b5093cc, type: 3}
-  - {fileID: 21300000, guid: f78f8d6a340d5ea45a180926961b26d5, type: 3}
-  - {fileID: 21300000, guid: e3cf4b2d329264440b21a3a1612c2694, type: 3}
-  - {fileID: 21300000, guid: 70983c46980db0847b159491ac8f471c, type: 3}
-  moveSpeed: 1
+  - {fileID: 21300000, guid: 1af1a3c17614272469cf675b83be7048, type: 3}
+  - {fileID: 21300000, guid: 72d9753c1fb52c24f91f4547229ec817, type: 3}
+  - {fileID: 21300000, guid: a5273fa8372cf114ab971b8cc90aceed, type: 3}
+  - {fileID: 21300000, guid: c10b8152954e2784a831fd10550ad1b0, type: 3}
+  - {fileID: 21300000, guid: ca952f263ae4d94449117b227101c29f, type: 3}
+  - {fileID: 21300000, guid: befef9af3e3d19e4b8a4d346c5996f05, type: 3}
+  - {fileID: 21300000, guid: 5cb3584370d8ed649b46876d18d9af1b, type: 3}
+  - {fileID: 21300000, guid: a40628445b69e1e468597243288d827d, type: 3}
+  - {fileID: 21300000, guid: 4ad6350b4825b694f9adf6a45757d075, type: 3}
+  - {fileID: 21300000, guid: 5cd6814400686da4fb50ef9114744d72, type: 3}
+  - {fileID: 21300000, guid: 15b523e0bcea7a449beb42a36fdc7c38, type: 3}
+  - {fileID: 21300000, guid: 1589373931bdf61489f03a4a860121d2, type: 3}
+  - {fileID: 21300000, guid: 0d4fa80cfc470994e9f3007d3adee8f9, type: 3}
+  - {fileID: 21300000, guid: f5cbb347a231f944fa48b87f477963c4, type: 3}
+  - {fileID: 21300000, guid: eb036256d05fe2d4788ca985669baf6e, type: 3}
+  - {fileID: 21300000, guid: 70caf2b1ab4e6a542bfff9aa86b6c7e2, type: 3}
+  stepSize: 0.4
 --- !u!212 &212905073929248594
 SpriteRenderer:
   m_ObjectHideFlags: 1
