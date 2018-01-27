@@ -14,11 +14,13 @@ public class WaveBar : MonoBehaviour {
         if (this.spRenderer == null) {
             this.spRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
-        this.spRenderer.sprite = barSprites[0];
+        int index = Mathf.FloorToInt(yVal);
+        index = Mathf.Min(index, barSprites.Count);
+        this.spRenderer.sprite = barSprites[index];
     }
 
     // Update is called once per frame
     void Update() {
-        this.transform.Translate(new Vector3(this.moveSpeed * Time.deltaTime, 0, 0));
+        this.transform.position = new Vector3(this.transform.position.x + moveSpeed * Time.deltaTime, this.transform.position.y, this.transform.position.z);
     }
 }

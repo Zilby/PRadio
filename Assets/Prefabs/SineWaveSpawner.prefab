@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71f15b1db3b249cf825e6b7cfb1de59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 1
-  frequency: 1
+  cappedAmplitude: 16
+  amplitude: 16
+  frequency: 10
   phase: 1
   spawnFrequency: 1

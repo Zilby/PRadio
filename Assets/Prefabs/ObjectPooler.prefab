@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToPool:
-  - amountToPool: 20
+  - amountToPool: 40
     objectToPool: {fileID: 1037230260980922, guid: 53bbc6c4a908a4a5fa1fe0e77143c7cd,
       type: 2}
     shouldExpand: 0
