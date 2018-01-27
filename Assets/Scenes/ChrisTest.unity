@@ -342,8 +342,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114132942352557556, guid: 414fdf4ff61e74ba6bb10d6400578e5f,
         type: 2}
-      propertyPath: spawnFrequency
-      value: 0.25
+      propertyPath: amplitude
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114132942352557556, guid: 414fdf4ff61e74ba6bb10d6400578e5f,
+        type: 2}
+      propertyPath: frequency
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114132942352557556, guid: 414fdf4ff61e74ba6bb10d6400578e5f,
+        type: 2}
+      propertyPath: numBars
+      value: 24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 414fdf4ff61e74ba6bb10d6400578e5f, type: 2}

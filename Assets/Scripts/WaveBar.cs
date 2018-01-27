@@ -6,9 +6,9 @@ public class WaveBar : MonoBehaviour {
 
     public List<Sprite> barSprites;
 
-    public float moveSpeed;
-
-    public int hSteps;
+    public float stepSize;
+    private int hSteps;
+	private float stepTime;
 
     private SpriteRenderer spRenderer;
 
@@ -20,10 +20,16 @@ public class WaveBar : MonoBehaviour {
             this.spRenderer.flipY = true;
             yVal = Mathf.Abs(yVal);
         }
-        int index = Mathf.FloorToInt(yVal);
+        int index = Mathf.CeilToInt(yVal);
         index = Mathf.Min(index, barSprites.Count);
         this.spRenderer.sprite = barSprites[index];
     }
+
+	public WaveBar Init(int hSteps, float stepTime) {
+		this.hSteps = hSteps;
+		this.stepTime = stepTime;
+		return this;
+	}
 
     void OnEnable() {
         StartCoroutine(Move());
@@ -31,8 +37,8 @@ public class WaveBar : MonoBehaviour {
 
     IEnumerator Move() {
         for (int i = 0; i < hSteps; i++) {
-            this.transform.Translate(new Vector3(0.5f, 0, 0));
-            yield return new WaitForSeconds(0.25f);
+			this.transform.Translate(new Vector3(stepSize, 0, 0));
+			yield return new WaitForSeconds(stepTime);
         }
         this.gameObject.SetActive(false);
     }
