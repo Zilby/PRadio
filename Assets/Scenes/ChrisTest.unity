@@ -298,6 +298,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114244573657042362, guid: 3f2141c8038d046d4908a542d2aac1ed,
+        type: 2}
+      propertyPath: itemsToPool.Array.data[0].amountToPool
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3f2141c8038d046d4908a542d2aac1ed, type: 2}
   m_IsPrefabParent: 0
@@ -310,7 +315,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4001605115256756, guid: 414fdf4ff61e74ba6bb10d6400578e5f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -9.99
       objectReference: {fileID: 0}
     - target: {fileID: 4001605115256756, guid: 414fdf4ff61e74ba6bb10d6400578e5f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -342,18 +347,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114132942352557556, guid: 414fdf4ff61e74ba6bb10d6400578e5f,
         type: 2}
-      propertyPath: amplitude
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114132942352557556, guid: 414fdf4ff61e74ba6bb10d6400578e5f,
-        type: 2}
-      propertyPath: frequency
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114132942352557556, guid: 414fdf4ff61e74ba6bb10d6400578e5f,
-        type: 2}
       propertyPath: numBars
-      value: 24
+      value: 49
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 414fdf4ff61e74ba6bb10d6400578e5f, type: 2}
