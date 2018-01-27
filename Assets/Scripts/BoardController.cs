@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BoardController : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class BoardController : MonoBehaviour {
     public Slider amplitudeSlider;
     public Slider impedanceSlider;
     public Slider distanceSlider;
+    public TextMeshProUGUI temperatureText;
     public SineWaveSpawner waveSpawner;
 
     /// <summary>
@@ -18,8 +20,8 @@ public class BoardController : MonoBehaviour {
     /// </summary>
     private float temperature = 0;
     private const float MAX_TEMPERATURE = 100f;
-    private const float COOLDOWN_RATE = 0.5f;
-    private const float TEMPERATURE_CHANGE_RATE = 1.0F;
+    private const float COOLDOWN_RATE = 1.0f;
+    private const float TEMPERATURE_CHANGE_RATE = 1.0f;
 
     /// <summary>
     /// The current impedance
@@ -88,10 +90,11 @@ public class BoardController : MonoBehaviour {
     private IEnumerator SetTemperature() {
         while (activated) {
             yield return new WaitForSeconds(TEMPERATURE_CHANGE_RATE);
-            power = distance + (Mathf.Abs(targetImpedance - impedance)) / Mathf.Max(maxAmplitude, maxFrequency)
+            power = distance + (Mathf.Abs(targetImpedance - impedance)) / Mathf.Max(targetAmplitude, targetFrequency)
                 + (interactionCounter > 0 ? INTERACTION_POWER_INCREASE : 0);
-            temperature += power - 0.5f;
+            temperature += power - COOLDOWN_RATE;
             temperature = Mathf.Max(0, temperature);
+            temperatureText.text = temperature.ToString();
         }
     }
 
