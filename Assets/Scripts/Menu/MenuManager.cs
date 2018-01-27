@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour {
 	private void Start()
 	{
 		AssignViewEvents();
+		mainMenu.Hide();
 		mainMenu.SelfFadeIn();
 	}
 
