@@ -8,6 +8,8 @@ public class WaveBar : MonoBehaviour {
 
     public float moveSpeed;
 
+    public int hSteps;
+
     private SpriteRenderer spRenderer;
 
     public void SetBarSprite(float yVal) {
@@ -19,8 +21,15 @@ public class WaveBar : MonoBehaviour {
         this.spRenderer.sprite = barSprites[index];
     }
 
-    // Update is called once per frame
-    void Update() {
-        this.transform.position = new Vector3(this.transform.position.x + moveSpeed * Time.deltaTime, this.transform.position.y, this.transform.position.z);
+    void OnEnable() {
+        StartCoroutine(Move());
+    }
+
+    IEnumerator Move() {
+        for (int i = 0; i < hSteps; i++) {
+            this.transform.Translate(new Vector3(0.5f, 0, 0));
+            yield return new WaitForSeconds(0.25f);
+        }
+        this.gameObject.SetActive(false);
     }
 }
