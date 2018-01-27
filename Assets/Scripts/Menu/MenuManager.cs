@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages the menu screen. 
@@ -31,7 +32,7 @@ public class MenuManager : MonoBehaviour {
 
 	private void Play()
 	{
-
+		StartCoroutine(StartGame());
 	}
 
 	private void Credits()
@@ -43,6 +44,13 @@ public class MenuManager : MonoBehaviour {
 	private void MainMenu()
 	{
 		StartCoroutine(SwapScreens(creditsMenu, mainMenu));
+	}
+
+
+	private IEnumerator StartGame()
+	{
+		yield return mainMenu.FadeOut();
+		SceneManager.LoadScene("Main");
 	}
 
 
