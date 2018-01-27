@@ -14,7 +14,7 @@ public class ObjectPooler : MonoBehaviour {
     public static ObjectPooler instance = null;
 
     private Dictionary<string, List<GameObject>> pooledObjects;
-    private const int tooManyItems = 50;
+    private const int tooManyItems = 500;
     public List<ObjectPoolItem> itemsToPool;
 
     void Awake() {
@@ -79,4 +79,13 @@ public class ObjectPooler : MonoBehaviour {
         }
         return temp;
     }
+
+
+	public void DisableAllTagged(string tag)
+	{
+		foreach (GameObject obj in pooledObjects[tag])
+		{
+			obj.SetActive(false);
+		}
+	}
 }

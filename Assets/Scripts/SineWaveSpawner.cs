@@ -38,7 +38,7 @@ public class SineWaveSpawner : MonoBehaviour {
         StartCoroutine(SpawnLoop());
     }
 
-    IEnumerator SpawnLoop() {
+    public IEnumerator SpawnLoop() {
         while (!paused) {
             yield return new WaitForSeconds(spawnTime);
             this.curX += this.baseFrequency;
