@@ -14,12 +14,17 @@ public class MenuManager : MonoBehaviour {
 	public Button main;
 	public FadeableUI mainMenu;
 	public FadeableUI creditsMenu;
+	public SineWaveSpawner waves;
 
 	private void Start()
 	{
 		AssignViewEvents();
 		mainMenu.Hide();
 		mainMenu.SelfFadeIn();
+		waves.amplitude = 15;
+		waves.frequency = 15;
+		waves.gameObject.SetActive(false);
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
 	}
 
 	private void AssignViewEvents()
@@ -38,11 +43,16 @@ public class MenuManager : MonoBehaviour {
 	private void Credits()
 	{
 		StartCoroutine(SwapScreens(mainMenu, creditsMenu));
+		waves.gameObject.SetActive(true);
+		StartCoroutine(waves.SpawnLoop());
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
 	}
 
 
 	private void MainMenu()
 	{
+		waves.gameObject.SetActive(false);
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
 		StartCoroutine(SwapScreens(creditsMenu, mainMenu));
 	}
 
@@ -65,6 +75,8 @@ public class MenuManager : MonoBehaviour {
 	/// </summary>
 	private void Quit()
 	{
+		waves.gameObject.SetActive(false);
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
 		StartCoroutine(Exit());
 	}
 

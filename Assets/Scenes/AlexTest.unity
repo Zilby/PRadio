@@ -229,7 +229,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41365201bf4184ceea8c1f10afdf6d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pooler: {fileID: 0}
   board: {fileID: 1620983328}
+  listenersText: {fileID: 0}
+  riskText: {fileID: 0}
+  popText: {fileID: 0}
 --- !u!224 &259807453 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224174927342756754, guid: 26daaab469a08ba42ac2204a09ee2e60,
@@ -582,12 +586,12 @@ Prefab:
     - target: {fileID: 224047557864809050, guid: 256792db2fb21c044b765b885a0daba4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224524092121198754, guid: 256792db2fb21c044b765b885a0daba4,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 256792db2fb21c044b765b885a0daba4, type: 2}
@@ -787,6 +791,7 @@ MonoBehaviour:
   amplitudeSlider: {fileID: 153907612}
   impedanceSlider: {fileID: 465324393}
   distanceSlider: {fileID: 1191860107}
+  temperatureText: {fileID: 0}
   waveSpawner: {fileID: 2075439514}
   impedanceLine: {fileID: 259807453}
   maxFrequency: 30
@@ -1015,22 +1020,12 @@ Prefab:
     - target: {fileID: 224676952263291316, guid: de99ce9008baf5a428b51fa963e06f92,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224692950690038178, guid: de99ce9008baf5a428b51fa963e06f92,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224876667926207252, guid: de99ce9008baf5a428b51fa963e06f92,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.6897874
-      objectReference: {fileID: 0}
-    - target: {fileID: 224876667926207252, guid: de99ce9008baf5a428b51fa963e06f92,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: -28.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de99ce9008baf5a428b51fa963e06f92, type: 2}
