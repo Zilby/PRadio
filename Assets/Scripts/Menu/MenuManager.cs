@@ -10,7 +10,9 @@ public class MenuManager : MonoBehaviour {
 	public Button play;
 	public Button credits;
 	public Button quit;
+	public Button main;
 	public FadeableUI mainMenu;
+	public FadeableUI creditsMenu;
 
 	private void Start()
 	{
@@ -24,6 +26,7 @@ public class MenuManager : MonoBehaviour {
 		play.onClick.AddListener(Play);
 		credits.onClick.AddListener(Credits);
 		quit.onClick.AddListener(Quit);
+		main.onClick.AddListener(MainMenu);
 	}
 
 	private void Play()
@@ -33,7 +36,20 @@ public class MenuManager : MonoBehaviour {
 
 	private void Credits()
 	{
+		StartCoroutine(SwapScreens(mainMenu, creditsMenu));
+	}
 
+
+	private void MainMenu()
+	{
+		StartCoroutine(SwapScreens(creditsMenu, mainMenu));
+	}
+
+
+	private IEnumerator SwapScreens(FadeableUI fout, FadeableUI fin)
+	{
+		yield return fout.FadeOut();
+		yield return fin.FadeIn();
 	}
 
 	/// <summary>
