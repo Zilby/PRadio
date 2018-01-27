@@ -17,8 +17,14 @@ public class WaveBar : MonoBehaviour {
         this.spRenderer.sprite = barSprites[0];
     }
 
-    // Update is called once per frame
-    void Update() {
-        this.transform.Translate(new Vector3(this.moveSpeed * Time.deltaTime, 0, 0));
+    void Start() {
+		StartCoroutine (Move ());
     }
+
+	IEnumerator Move() {
+		while (this.gameObject.activeSelf) {
+			this.transform.Translate (new Vector3 (0.5f, 0, 0));
+			yield return new WaitForSeconds (0.25f);
+		}
+	}
 }
