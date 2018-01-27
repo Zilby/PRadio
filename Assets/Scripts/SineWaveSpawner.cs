@@ -52,11 +52,12 @@ public class SineWaveSpawner : MonoBehaviour {
         if (sin * flip < 0) {
             sin = 0;
         }
-        GameObject bar = ObjectPooler.instance.GetPooledObjectAtPosition("WaveBar", new Vector3(this.transform.position.x + (spawnPos * barWidth * this.transform.localScale.x), this.transform.position.y + (vOffset * flip * this.transform.localScale.y), this.transform.position.z), Quaternion.identity);
+        GameObject bar = ObjectPooler.instance.GetPooledObjectAtPosition("WaveBar", new Vector3(this.transform.position.x + (spawnPos * barWidth * this.transform.lossyScale.x), this.transform.position.y + (vOffset * flip * this.transform.lossyScale.y), this.transform.position.z), Quaternion.identity);
         if (bar != null) {
-            bar.GetComponent<WaveBar>().Init(numBars - spawnPos, spawnTime, barWidth * this.transform.localScale.x).SetBarSprite(sin);
-            bar.transform.localScale = new Vector3(this.transform.localScale.x * 0.65f, this.transform.localScale.y, this.transform.localScale.z);
+            bar.GetComponent<WaveBar>().Init(numBars - spawnPos, spawnTime, barWidth * this.transform.lossyScale.x).SetBarSprite(sin);
+            bar.transform.localScale = new Vector3(this.transform.lossyScale.x * 0.65f, this.transform.lossyScale.y, this.transform.lossyScale.z);
             bar.gameObject.SetActive(true);
         }
     }
+
 }
