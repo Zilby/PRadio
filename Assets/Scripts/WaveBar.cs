@@ -8,6 +8,8 @@ public class WaveBar : MonoBehaviour {
 
     public float moveSpeed;
 
+	public int hSteps;
+
     private SpriteRenderer spRenderer;
 
     public void SetBarSprite(float yVal) {
@@ -17,14 +19,15 @@ public class WaveBar : MonoBehaviour {
         this.spRenderer.sprite = barSprites[0];
     }
 
-    void Start() {
+    void OnEnable() {
 		StartCoroutine (Move ());
     }
 
 	IEnumerator Move() {
-		while (this.gameObject.activeSelf) {
+		for (int i = 0; i < hSteps; i++) {
 			this.transform.Translate (new Vector3 (0.5f, 0, 0));
 			yield return new WaitForSeconds (0.25f);
 		}
+		this.gameObject.SetActive(false);
 	}
 }
