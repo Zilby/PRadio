@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4b97a3dc54c644738b5affc68831ba7e
+timeCreated: 1511947527
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Pirulen
+  fontNames:
+  - Pirulen
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
