@@ -136,25 +136,25 @@ public class BoardController : MonoBehaviour {
     }
 
     public void ModifyFrequency(float amount) {
-        this.frequency += amount;
+        this.frequency = amount;
 		interactionCounter = INTERACTION_TIMER;
         this.RandomizeImpedance();
     }
 
     public void ModifyAmplitude(float amount) {
-        this.amplitude += amount;
+        this.amplitude = amount;
 		interactionCounter = INTERACTION_TIMER;
         this.RandomizeImpedance();
     }
 
     public void ModifyDistance(float amount) {
 		interactionCounter = INTERACTION_TIMER;
-		this.distance += amount;
+		this.distance = amount;
     }
 
     public void ModifyImpedance(float amount) {
 		interactionCounter = INTERACTION_TIMER;
-		this.impedance += amount;
+		this.impedance = amount;
     }
 
     public float PercentageCorrect() {
