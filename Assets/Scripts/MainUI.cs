@@ -88,7 +88,7 @@ public class MainUI : MonoBehaviour {
 	{
 		SetExpression(Expression.neutral);
 		SetExpression(Expression.listening);
-		yield return new WaitForSecondsRealtime(1.0f);
+		yield return new WaitForSecondsRealtime(0.5f);
 		yield return sempaiText.TypeText("Hello, I am radio sempai, welcome to Resist & Transmit");
 		yield return new WaitForSecondsRealtime(2.0f);
 		SetExpression(Expression.happy);
