@@ -10,6 +10,11 @@ public class MainUI : MonoBehaviour {
 	public Button pauseButton;
 	public Button menuButton;
 	public Button quitButton;
+
+	public delegate void textEvent(int i);
+	public textEvent StartText;
+
+	public FadeableUI textOverlay;
 	public FadeableUI overlay;
 
 	// Use this for initialization
@@ -18,7 +23,32 @@ public class MainUI : MonoBehaviour {
 		quitButton.onClick.AddListener(Quit);
 		menuButton.onClick.AddListener(Menu);
 
+		StartText = BeginText;
 		overlay.useUnscaledDeltaTimeForUI = true;
+	}
+
+	private void Update()
+	{
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			BeginText(0);
+		}
+	}
+
+	private void BeginText(int i)
+	{
+		GameManager.Pausing();
+		pauseButton.gameObject.SetActive(false);
+		textOverlay.SelfFadeIn();
+		Camera.main.GetComponent<BlurOptimized>().enabled = true;
+	}
+
+	private void EndText()
+	{
+		GameManager.Pausing();
+		pauseButton.gameObject.SetActive(false);
+		textOverlay.SelfFadeIn();
+		Camera.main.GetComponent<BlurOptimized>().enabled = true;
 	}
 
 	private void Pause()
