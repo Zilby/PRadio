@@ -23,8 +23,6 @@ public class TargetWave : MonoBehaviour {
 
         LineRenderer line = gameObject.GetComponent<LineRenderer> ();
         line.positionCount = resolution;
-        Debug.Log (line );
-        Debug.Log (spawner);
         for (int i = 0; i < resolution; i++) { 
             line.SetPosition (i, new Vector3 (i * xSeperation + baseX, yScale * amp * Mathf.Sin(i * f * 0.015f) + baseY, 0));
         }

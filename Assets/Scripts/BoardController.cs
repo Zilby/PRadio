@@ -12,6 +12,7 @@ public class BoardController : MonoBehaviour {
     public Slider distanceSlider;
     public Slider temperatureSlider;
     public SineWaveSpawner waveSpawner;
+    public DistanceRadarPlayer distRadar;
     public Transform impedanceLine;
     public List<GameObject> kidExpressions;
 
@@ -146,7 +147,6 @@ public class BoardController : MonoBehaviour {
     }
 
     public void RandomizeValues() {
-        Debug.Log ("Randomizing");
         RandomizeFrequency();
         RandomizeAmplitude();
         waveSpawner.targetWave.NewTarget (targetAmplitude, targetFrequency);
@@ -187,6 +187,7 @@ public class BoardController : MonoBehaviour {
     public void ModifyDistance(float amount) {
         interactionCounter = INTERACTION_TIMER;
         this.distance = amount;
+        this.distRadar.curDistance = this.distance;
     }
 
     public void ModifyImpedance(float amount) {
