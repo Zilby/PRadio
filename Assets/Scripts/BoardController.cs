@@ -25,6 +25,7 @@ public class BoardController : MonoBehaviour {
     /// </summary>
     private float temperature = 0;
     private const float MAX_TEMPERATURE = 100f;
+    private const float ALARM_THRESHOLD = 90f;
     private const float COOLDOWN_RATE = 1.0f;
     private const float TEMPERATURE_CHANGE_RATE = 1.0f;
 
@@ -109,8 +110,12 @@ public class BoardController : MonoBehaviour {
                 + (interactionCounter > 0 ? INTERACTION_POWER_INCREASE : 0);
             temperature += power - COOLDOWN_RATE;
             temperature = Mathf.Max(0, temperature);
-            tempAlarm.volume = temperature / MAX_TEMPERATURE;
-            temperatureSlider.value = temperature / 100.0f;
+            if (temperature > ALARM_THRESHOLD) {
+                tempAlarm.Play();
+            } else {
+                tempAlarm.Stop();
+            }
+            temperatureSlider.value = temperature / MAX_TEMPERATURE;
         }
     }
 

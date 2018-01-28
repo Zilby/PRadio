@@ -1725,7 +1725,7 @@ MonoBehaviour:
   amplitudeSlider: {fileID: 1646028931}
   impedanceSlider: {fileID: 628762558}
   distanceSlider: {fileID: 2002991405}
-  temperatureText: {fileID: 1006948123}
+  temperatureSlider: {fileID: 0}
   waveSpawner: {fileID: 284760612}
   impedanceLine: {fileID: 2126368447}
   staticAudio: {fileID: 767259270}
