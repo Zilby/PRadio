@@ -14,4 +14,5 @@ public class Laser : MonoBehaviour {
     void OnBecameInvisible() {
         Destroy(this.gameObject);
     }
+
 }
