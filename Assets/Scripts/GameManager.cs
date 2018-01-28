@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour {
     const float RISK_OFFSET = 100.0f;
     const float POP_OFFSET = 1200.0f;
 
+    public Slider riskSlider;
+    public Slider popSlider;
+
     public ObjectPooler pooler;
     public BoardController board;
     public TextMeshProUGUI listenersText;
@@ -140,12 +143,10 @@ public class GameManager : MonoBehaviour {
 
             this.sirenAudio.volume = this.risk / this.maxRisk;
 
-			if (this.board.Overheated() || this.risk > this.maxRisk)
-			{
-				yield return LoseCondition();
-			}
-			if (this.popularity > this.targetPopularity) 
-			{
+            if (this.board.Overheated() || this.risk > this.maxRisk) {
+                yield return LoseCondition();
+            }
+            if (this.popularity > this.targetPopularity) {
                 yield return WinCondition();
             }
             yield return new WaitForSeconds(0.5f);
@@ -154,8 +155,10 @@ public class GameManager : MonoBehaviour {
 
     private void DisplayText() {
         listenersText.text = "Listeners\n" + Mathf.CeilToInt(listeners).ToString();
-        popText.text = "Popularity\n" + popularity.ToString();
-        riskText.text = "Risk\n" + risk.ToString();
+        popText.text = "Popularity";
+        riskText.text = "Risk";
+        riskSlider.value = risk / maxRisk;
+        popSlider.value = popularity / targetPopularity;
     }
 
     private void Pause() {
@@ -173,17 +176,17 @@ public class GameManager : MonoBehaviour {
     private IEnumerator WinCondition() {
         Pause();
         board.Activated = false;
-		StartCoroutine(ExitFade());
-		MainUI.Win();
-		// Fade to black code
-		// Show good job
-		yield return new WaitForSecondsRealtime(4);
-		Debug.Log("Win!!");
-		yield return SetupGamePhase();
+        StartCoroutine(ExitFade());
+        MainUI.Win();
+        // Fade to black code
+        // Show good job
+        yield return new WaitForSecondsRealtime(4);
+        Debug.Log("Win!!");
+        yield return SetupGamePhase();
 
-	}
+    }
 
-	private IEnumerator LoseCondition() {
+    private IEnumerator LoseCondition() {
         Pause();
         board.Activated = false;
         // fade to black code
