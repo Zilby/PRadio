@@ -24,7 +24,9 @@ public class MainUI : MonoBehaviour {
     public delegate void textEvent(int i);
     public static textEvent StartText;
 
-    public Action EndText;
+    public static Action EndText;
+	public static Action Win;
+	public static Action End;
 
     public FadeableUI textOverlay;
     public FadeableUI overlay;
@@ -33,6 +35,9 @@ public class MainUI : MonoBehaviour {
     public List<GameObject> sempais;
     public MoveableText kidText;
     public MoveableText sempaiText;
+
+	public FadeableUI win;
+	public FadeableUI lose;
 
     private delegate IEnumerator dialogueEvent();
     private List<dialogueEvent> dialogues;
@@ -46,6 +51,8 @@ public class MainUI : MonoBehaviour {
 
         StartText = BeginText;
         EndText = FinishText;
+		Win = WinGame;
+		End = EndGame;
         dialogue0 = Dialogue0;
         dialogue1 = Dialogue1;
         dialogues = new List<dialogueEvent>() { dialogue0, dialogue1, dialogue2, dialogue3 };
@@ -230,4 +237,18 @@ public class MainUI : MonoBehaviour {
                 break;
         }
     }
+
+	private void WinGame()
+	{
+		win.useUnscaledDeltaTimeForUI = true;
+		win.SelfFadeIn();
+		SceneManager.LoadScene("Menu");
+	}
+
+
+	private void EndGame()
+	{
+		lose.useUnscaledDeltaTimeForUI = true;
+		lose.SelfFadeIn();
+	}
 }

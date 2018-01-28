@@ -140,9 +140,11 @@ public class GameManager : MonoBehaviour {
 
             this.sirenAudio.volume = this.risk / this.maxRisk;
 
-            if (this.board.Overheated() || this.risk > this.maxRisk) {
-                yield return LoseCondition();
-            } else if (this.popularity > this.targetPopularity) {
+			if (this.board.Overheated() || this.risk > this.maxRisk)
+			{
+				yield return LoseCondition();
+			}
+            if (this.popularity > this.targetPopularity) {
                 this.WinCondition();
             }
             yield return new WaitForSeconds(0.5f);
@@ -170,10 +172,10 @@ public class GameManager : MonoBehaviour {
     private void WinCondition() {
         Pause();
         board.Activated = false;
+		MainUI.Win();
         // Fade to black code
         // Show good job
         Debug.Log("Win!!");
-        Start();
     }
 
     private IEnumerator LoseCondition() {
@@ -181,8 +183,10 @@ public class GameManager : MonoBehaviour {
         board.Activated = false;
         // fade to black code
         yield return ExitFade();
-        // you lose
-        Debug.Log("Lose!");
+		MainUI.End();
+		yield return new WaitForSecondsRealtime(3.0f);
+		// you lose
+		Debug.Log("Lose!");
         SceneManager.LoadScene("Menu");
     }
 
