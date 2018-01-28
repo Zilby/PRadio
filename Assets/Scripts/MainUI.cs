@@ -21,8 +21,8 @@ public class MainUI : MonoBehaviour {
 	public Button menuButton;
 	public Button quitButton;
 
-	public static delegate void textEvent(int i);
-	public textEvent StartText;
+	public delegate void textEvent(int i);
+	public static textEvent StartText;
 
 	public Action EndText;
 
