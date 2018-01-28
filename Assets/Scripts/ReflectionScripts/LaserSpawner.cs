@@ -26,7 +26,7 @@ public class LaserSpawner : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown("space")) {
+        if (Input.GetKeyDown("l")) {
             Spawn();
         }
     }
