@@ -27,14 +27,14 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4698337838626044
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1645427327149910}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -133,15 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 1.5
-  playTime: 20
+  playTime: 45
   tracks:
   - {fileID: 8300000, guid: 4eb58c441e8564fedbeb3b08c97dd07f, type: 3}
-  - {fileID: 8300000, guid: bcdfc8e5ac0214e1ca2ba99005a569d6, type: 3}
+  - {fileID: 8300000, guid: 686bc2c764b544b8fbe2227df9e246be, type: 3}
   - {fileID: 8300000, guid: 8e88e9a7e6ebc4d21a7507097cb50eb3, type: 3}
-  - {fileID: 8300000, guid: 28cbd9a7bfd4845c7a32051b74a9de14, type: 3}
-  - {fileID: 8300000, guid: b83fb7608a44d411a9c2fbb274216e48, type: 3}
-  - {fileID: 8300000, guid: bcdfc8e5ac0214e1ca2ba99005a569d6, type: 3}
   - {fileID: 8300000, guid: efc4cdba16a524da89a076f5fff3888e, type: 3}
-  - {fileID: 8300000, guid: 49c19df0eca394067bbf83b0f7c9de94, type: 3}
-  - {fileID: 8300000, guid: 4ed7934e8ba354a90b82b6aaf7f31668, type: 3}
   - {fileID: 8300000, guid: b83fb7608a44d411a9c2fbb274216e48, type: 3}
+  - {fileID: 8300000, guid: 49c19df0eca394067bbf83b0f7c9de94, type: 3}
