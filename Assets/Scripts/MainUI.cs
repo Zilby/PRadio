@@ -4,18 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MainUI : MonoBehaviour {
+
+	public enum Expression
+	{
+		happy, 
+		neutral,
+		meh, 
+		listening, 
+		pointing,
+	}
 
 	public Button pauseButton;
 	public Button menuButton;
 	public Button quitButton;
 
-	public delegate void textEvent(int i);
+	public static delegate void textEvent(int i);
 	public textEvent StartText;
+
+	public Action EndText;
 
 	public FadeableUI textOverlay;
 	public FadeableUI overlay;
+
+	public List<GameObject> kids;
+	public List<GameObject> sempais;
+	public MoveableText kidText;
+	public MoveableText sempaiText;
+
+	private delegate IEnumerator dialogueEvent();
+	private List<dialogueEvent> dialogues;
+	private dialogueEvent dialogue0;
 
 	// Use this for initialization
 	void Start () {
@@ -24,14 +45,22 @@ public class MainUI : MonoBehaviour {
 		menuButton.onClick.AddListener(Menu);
 
 		StartText = BeginText;
+		EndText = FinishText;
+		dialogue0 = Dialogue0;
+		dialogues = new List<dialogueEvent>() { dialogue0 };
 		overlay.useUnscaledDeltaTimeForUI = true;
+		textOverlay.useUnscaledDeltaTimeForUI = true;
 	}
 
 	private void Update()
 	{
-		if (Input.GetKey(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.Q))
 		{
 			BeginText(0);
+		}
+		if (Input.GetKeyDown(KeyCode.W))
+		{
+			EndText();
 		}
 	}
 
@@ -41,15 +70,33 @@ public class MainUI : MonoBehaviour {
 		pauseButton.gameObject.SetActive(false);
 		textOverlay.SelfFadeIn();
 		Camera.main.GetComponent<BlurOptimized>().enabled = true;
+		sempaiText.ClearText();
+		kidText.ClearText();
+		StartCoroutine(dialogues[i]());
 	}
 
-	private void EndText()
+	private void FinishText()
 	{
 		GameManager.Pausing();
-		pauseButton.gameObject.SetActive(false);
-		textOverlay.SelfFadeIn();
-		Camera.main.GetComponent<BlurOptimized>().enabled = true;
+		pauseButton.gameObject.SetActive(true);
+		textOverlay.SelfFadeOut();
+		Camera.main.GetComponent<BlurOptimized>().enabled = false;
 	}
+
+
+	private IEnumerator Dialogue0()
+	{
+		SetExpression(Expression.neutral);
+		SetExpression(Expression.listening);
+		yield return new WaitForSecondsRealtime(1.0f);
+		yield return sempaiText.TypeText("Hello, I am radio sempai, welcome to Resist & Transmit");
+		yield return new WaitForSecondsRealtime(2.0f);
+		SetExpression(Expression.happy);
+		yield return kidText.TypeText("Good to meet you radio sempai!");
+		yield return new WaitForSecondsRealtime(2.0f);
+		FinishText();
+	}
+
 
 	private void Pause()
 	{
@@ -95,5 +142,45 @@ public class MainUI : MonoBehaviour {
 		yield return GameManager.Exiting();
 		Time.timeScale = 1.0f;
 		SceneManager.LoadScene("Menu");
+	}
+
+	private void SetExpression(Expression e)
+	{
+		switch (e)
+		{
+
+			case Expression.happy:
+				for (int i = 0; i < kids.Count; ++i)
+				{
+					kids[i].SetActive(i == 0);
+				}
+				break;
+			case Expression.neutral:
+				for (int i = 0; i < kids.Count; ++i)
+				{
+					kids[i].SetActive(i == 1);
+				}
+				break;
+			case Expression.meh:
+				for (int i = 0; i < kids.Count; ++i)
+				{
+					kids[i].SetActive(i == 2);
+				}
+				break;
+			case Expression.listening:
+				for (int i = 0; i < sempais.Count; ++i)
+				{
+					sempais[i].SetActive(i == 0);
+				}
+				break;
+			case Expression.pointing:
+				for (int i = 0; i < sempais.Count; ++i)
+				{
+					sempais[i].SetActive(i == 1);
+				}
+				break;
+			default:
+				break;
+		}
 	}
 }
