@@ -24,11 +24,11 @@ public class SineWaveSpawner : MonoBehaviour {
     private float vOffset = 1.9f;
     private float barWidth = 0.4f;
 
-    public float SinFunction(float x, bool useFreq) {
+    public float SinFunction(float x) {
         if (amplitude > cappedAmplitude) {
             amplitude = cappedAmplitude;
         }
-        return amplitude * Mathf.Sin(x * (useFreq ? this.baseFrequency * frequency : 1));
+        return amplitude * Mathf.Sin(x);
     }
 
     void Start() {
@@ -44,7 +44,7 @@ public class SineWaveSpawner : MonoBehaviour {
         while (!paused) {
             yield return new WaitForSeconds(spawnTime);
             this.curX += this.baseFrequency * frequency;
-            float sin = this.SinFunction(this.curX, false);
+            float sin = this.SinFunction(this.curX);
             spawnBar(sin, 1, 0);
             spawnBar(sin, -1, 0);
         }
@@ -62,7 +62,7 @@ public class SineWaveSpawner : MonoBehaviour {
         }
     }
 
-    void InitTarget() {
+    public void InitTarget() {
         targetWave.Init (this, barWidth);
     }
 

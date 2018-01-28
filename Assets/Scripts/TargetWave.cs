@@ -5,31 +5,40 @@ using UnityEngine;
 public class TargetWave : MonoBehaviour {
 
     private SineWaveSpawner spawner;
-    private int resolution = 50;
+    public int resolution = 63;
 
-    private float xSeperation;
-    private float yScale;
+    public float xSeperation;
+    public float yScale = .075f;
 
-    private float baseX;
-    private float baseY;
+    public float baseX = -7.32f;
+    public float baseY = 4.69f;
 
-
-
-    void Start() {
-        spawner = this.transform.parent.gameObject.GetComponent<SineWaveSpawner>();
-    }
 
     public void Init(SineWaveSpawner sp, float barWidth) {
         spawner = sp;
-        xSeperation = barWidth;
+        xSeperation = barWidth * 0.45f;
     }
 
-    void NewTarget() {
+    public void NewTarget(float amp, float f) {
 
         LineRenderer line = gameObject.GetComponent<LineRenderer> ();
         line.positionCount = resolution;
+        Debug.Log (line );
+        Debug.Log (spawner);
         for (int i = 0; i < resolution; i++) { 
-            line.SetPosition (i, new Vector3 (i * xSeperation + baseX, yScale * spawner.SinFunction (i, true) + baseY, 0));
+            line.SetPosition (i, new Vector3 (i * xSeperation + baseX, yScale * amp * Mathf.Sin(i * f * 0.015f) + baseY, 0));
         }
     }
+
+    //void OnEnable() {
+   // 
+   //    StartCoroutine (Refresh ());
+   // }
+
+    //IEnumerator Refresh() {
+     //   while (true) {
+     //       NewTarget ();
+     //       yield return new WaitForSeconds (1);
+     //   }
+    //}
 }
