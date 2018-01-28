@@ -67,6 +67,9 @@ public class GameManager : MonoBehaviour {
         this.maxRisk =  RISK_OFFSET / DIFFICULTY_MODIFIER;
         this.targetPopularity = reputation * POP_OFFSET / (day * DIFFICULTY_MODIFIER);
         this.board.RandomizeValues();
+
+		//play audio
+
         board.Activated = true;
         yield return mainCanvas.FadeIn();
         sineWaveOverlay.SetActive(false);

@@ -15,19 +15,17 @@ public class MoveableText : MonoBehaviour
 	private float letterDelay = 0.005f;
 
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
 		text = GetComponent<TextMeshProUGUI>();
 	}
 
-	// Update is called once per frame
-	void Update()
+	public void ClearText()
 	{
-
+		text.text = "";
 	}
 
-
-	IEnumerator TypeText(string message)
+	public IEnumerator TypeText(string message)
 	{
 		string current = "";
 		text.text = "";
@@ -48,7 +46,7 @@ public class MoveableText : MonoBehaviour
 				text.text += m[j];
 			}
 			text.text += "</color>";
-			yield return new WaitForSeconds(letterDelay);
+			yield return new WaitForSecondsRealtime(letterDelay);
 		}
 	}
 }
