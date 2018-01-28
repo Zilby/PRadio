@@ -56,3 +56,7 @@ MonoBehaviour:
     objectToPool: {fileID: 1037230260980922, guid: 53bbc6c4a908a4a5fa1fe0e77143c7cd,
       type: 2}
     shouldExpand: 0
+  - amountToPool: 5
+    objectToPool: {fileID: 1733656972257190, guid: b266b6d89bcfedc4b9f4b4645f9be183,
+      type: 2}
+    shouldExpand: 0
