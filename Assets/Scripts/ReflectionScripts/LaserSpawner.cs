@@ -14,4 +14,10 @@ public class LaserSpawner : MonoBehaviour {
     void Start() {
         //Spawn();
     }
+
+	void Update () {
+		if (Input.GetKeyDown ("space")) {
+			Spawn ();
+		}
+	}
 }
