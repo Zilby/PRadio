@@ -59,6 +59,7 @@ public class MenuManager : MonoBehaviour {
 
 	private IEnumerator StartGame()
 	{
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
 		yield return mainMenu.FadeOut();
 		SceneManager.LoadScene("Main");
 	}
