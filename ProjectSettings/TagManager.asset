@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - WaveBar
+  - Lazer
+  - CopperNode
+  - Goal
   layers:
   - Default
   - TransparentFX
