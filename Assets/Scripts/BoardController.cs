@@ -93,9 +93,13 @@ public class BoardController : MonoBehaviour {
         waveSpawner.amplitude = amplitude;
         waveSpawner.frequency = frequency;
         SetAudio();
-    }
+		ModifyAmplitude(amplitudeSlider.value);
+		ModifyFrequency(frequencySlider.value);
+		ModifyDistance(distanceSlider.value);
+		ModifyImpedance(impedanceSlider.value);
+	}
 
-    private void AssignViewEvents() {
+	private void AssignViewEvents() {
         frequencySlider.onValueChanged.AddListener(ModifyFrequency);
         amplitudeSlider.onValueChanged.AddListener(ModifyAmplitude);
         impedanceSlider.onValueChanged.AddListener(ModifyImpedance);
