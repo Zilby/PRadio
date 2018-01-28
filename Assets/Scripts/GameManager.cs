@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+
+    [System.NonSerialized]
+    public static GameManager instance;
 
     const float DIFFICULTY_MODIFIER = 1.2f;
     const float RISK_OFFSET = 100.0f;
@@ -16,9 +20,9 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI riskText;
     public TextMeshProUGUI popText;
     public AudioSource sirenAudio;
-	public AudioSource commercial;
-	public AudioSource staticNoise;
-	public GameObject audioManager;
+    public AudioSource commercial;
+    public AudioSource staticNoise;
+    public GameObject audioManager;
     public float changeValuesEvery;
     public GameObject sineWaveOverlay;
     public GameObject waveObj;
@@ -30,7 +34,9 @@ public class GameManager : MonoBehaviour {
     public delegate IEnumerator exitEvent();
     public static exitEvent Exiting;
 
-	public List<AudioClip> commercials;
+    public List<AudioClip> commercials;
+
+    public Button reflectButton;
 
     private int day;
 
@@ -51,9 +57,14 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
 
     void Awake() {
+        if (instance != null) {
+            Destroy(instance.gameObject);
+        }
+        instance = this;
         Instantiate(pooler);
     }
     void Start() {
+        reflectButton.gameObject.SetActive(false);
         StartCoroutine(SetupGamePhase());
         mainCanvas.useUnscaledDeltaTimeForUI = true;
         Pausing = Pause;
@@ -63,6 +74,9 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator SetupGamePhase() {
         day += 1;
+        if (day >= 1) {
+            reflectButton.gameObject.SetActive(true);
+        }
         this.reputation = day * DIFFICULTY_MODIFIER;
         this.maxRisk = RISK_OFFSET / reputation;
         this.targetPopularity = reputation * POP_OFFSET;
@@ -70,25 +84,24 @@ public class GameManager : MonoBehaviour {
         changeValuesEvery = Mathf.Max(changeValuesEvery, 15f);
         this.board.RandomizeValues();
 
-		//play audio
-		int i = Random.Range(0, commercials.Count);
-		commercial.clip = commercials[i];
-		commercial.Play();
-		while (commercial.isPlaying)
-		{
-			yield return null;
-		}
-		board.Activated = true;
+        //play audio
+        int i = Random.Range(0, commercials.Count);
+        commercial.clip = commercials[i];
+        commercial.Play();
+        while (commercial.isPlaying) {
+            yield return null;
+        }
+        board.Activated = true;
         yield return mainCanvas.FadeIn();
-		MainUI.StartText(0);
-		staticNoise.Play();
-		audioManager.SetActive(true);
+        MainUI.StartText(0);
+        staticNoise.Play();
+        audioManager.SetActive(true);
         sineWaveOverlay.SetActive(false);
         waveObj.SetActive(true);
-		StartCoroutine(ControlGamePhase());
-	}
+        StartCoroutine(ControlGamePhase());
+    }
 
-	private IEnumerator ChangeAudio() {
+    private IEnumerator ChangeAudio() {
         yield return new WaitForSeconds(changeValuesEvery);
         this.board.RandomizeValues();
     }
@@ -98,27 +111,21 @@ public class GameManager : MonoBehaviour {
             lroc += 1 - board.PercentageWrong() - 0.5f;
             this.listeners = this.reputation * Mathf.Pow((board.Distance + 1.0f), 2) * board.Distance * lroc;
             this.risk += (this.reputation / 4.0f) * (board.Distance - 0.5f);
-			float expression = (1 - board.PercentageWrong()) - 0.5f;
+            float expression = (1 - board.PercentageWrong()) - 0.5f;
             this.popularity += expression * (listeners / 10f);
-			if(expression < 0)
-			{
-				for (int i = 0; i < board.kidExpressions.Count; i++)
-				{
-					board.kidExpressions[i].SetActive(i == 2);
-				}
-			} else if (expression < 0.3)
-			{
-				for (int i = 0; i < board.kidExpressions.Count; i++)
-				{
-					board.kidExpressions[i].SetActive(i == 1);
-				}
-			} else
-			{
-				for (int i = 0; i < board.kidExpressions.Count; i++)
-				{
-					board.kidExpressions[i].SetActive(i == 0);
-				}
-			}
+            if (expression < 0) {
+                for (int i = 0; i < board.kidExpressions.Count; i++) {
+                    board.kidExpressions[i].SetActive(i == 2);
+                }
+            } else if (expression < 0.3) {
+                for (int i = 0; i < board.kidExpressions.Count; i++) {
+                    board.kidExpressions[i].SetActive(i == 1);
+                }
+            } else {
+                for (int i = 0; i < board.kidExpressions.Count; i++) {
+                    board.kidExpressions[i].SetActive(i == 0);
+                }
+            }
             listeners = Mathf.Max(0, listeners);
             risk = Mathf.Max(0, risk);
             popularity = Mathf.Max(0, popularity);
@@ -143,6 +150,14 @@ public class GameManager : MonoBehaviour {
 
     private void Pause() {
         Time.timeScale = Time.timeScale == 0.0f ? 1.0f : 0.0f;
+    }
+
+    public void ReflectionWin() {
+        risk = 0f;
+    }
+
+    public void ReflectionLose() {
+        risk += 1f;
     }
 
     private void WinCondition() {
