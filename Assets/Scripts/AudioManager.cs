@@ -30,8 +30,10 @@ public class AudioManager : MonoBehaviour {
         musicSource = gameObject.GetComponent<AudioSource>();
         musicSource.loop = true;
         paused = false;
-        originalVolume = musicSource.volume;
+        originalVolume = 0f;
 
+        musicSource.clip = tracks[0];
+        StartCoroutine(FadeIn());
         StartCoroutine(ChangeTrack());
     }
 

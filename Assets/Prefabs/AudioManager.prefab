@@ -133,15 +133,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 1.5
-  playTime: 5
+  playTime: 20
   tracks:
-  - {fileID: 8300000, guid: 686bc2c764b544b8fbe2227df9e246be, type: 3}
+  - {fileID: 8300000, guid: 4eb58c441e8564fedbeb3b08c97dd07f, type: 3}
   - {fileID: 8300000, guid: bcdfc8e5ac0214e1ca2ba99005a569d6, type: 3}
   - {fileID: 8300000, guid: 8e88e9a7e6ebc4d21a7507097cb50eb3, type: 3}
   - {fileID: 8300000, guid: 28cbd9a7bfd4845c7a32051b74a9de14, type: 3}
-  - {fileID: 8300000, guid: d595fb82865714451a123a821c8b8425, type: 3}
+  - {fileID: 8300000, guid: b83fb7608a44d411a9c2fbb274216e48, type: 3}
   - {fileID: 8300000, guid: bcdfc8e5ac0214e1ca2ba99005a569d6, type: 3}
   - {fileID: 8300000, guid: efc4cdba16a524da89a076f5fff3888e, type: 3}
   - {fileID: 8300000, guid: 49c19df0eca394067bbf83b0f7c9de94, type: 3}
-  - {fileID: 8300000, guid: d595fb82865714451a123a821c8b8425, type: 3}
-  - {fileID: 8300000, guid: 9eda412cd33f244f0af5ab6ef8940b5c, type: 3}
+  - {fileID: 8300000, guid: 4ed7934e8ba354a90b82b6aaf7f31668, type: 3}
+  - {fileID: 8300000, guid: b83fb7608a44d411a9c2fbb274216e48, type: 3}
