@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour {
     public GameObject waveObj;
     public FadeableUI mainCanvas;
 
+	public delegate void pauseEvent();
+	public static pauseEvent Pausing;
+
     private int day;
 
     // Risk = (reputation * distance)
@@ -49,6 +52,7 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(SetupGamePhase());
 		StartCoroutine(ControlGamePhase());
 		mainCanvas.useUnscaledDeltaTimeForUI = true;
+		Pausing += Pause;
     }
 
 
@@ -102,8 +106,8 @@ public class GameManager : MonoBehaviour {
         riskText.text = "Risk\n" + risk.ToString();
     }
 
-    public void Pause() {
-        Time.timeScale = 0.0f;
+    private void Pause() {
+        Time.timeScale = Time.timeScale == 0.0f ? 1.0f : 0.0f;
     }
 
     private void WinCondition() {
