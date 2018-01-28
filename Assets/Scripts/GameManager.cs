@@ -97,7 +97,27 @@ public class GameManager : MonoBehaviour {
             lroc += 1 - board.PercentageWrong() - 0.5f;
             this.listeners = this.reputation * Mathf.Pow((board.Distance + 1.0f), 2) * board.Distance * lroc;
             this.risk += (this.reputation / 4.0f) * (board.Distance - 0.5f);
-            this.popularity += ((1 - board.PercentageWrong()) - 0.5f) * (listeners / 10f);
+			float expression = (1 - board.PercentageWrong()) - 0.5f;
+            this.popularity += expression * (listeners / 10f);
+			if(expression < 0)
+			{
+				for (int i = 0; i < board.kidExpressions.Count; i++)
+				{
+					board.kidExpressions[i].SetActive(i == 2);
+				}
+			} else if (expression < 0.3)
+			{
+				for (int i = 0; i < board.kidExpressions.Count; i++)
+				{
+					board.kidExpressions[i].SetActive(i == 1);
+				}
+			} else
+			{
+				for (int i = 0; i < board.kidExpressions.Count; i++)
+				{
+					board.kidExpressions[i].SetActive(i == 0);
+				}
+			}
             listeners = Mathf.Max(0, listeners);
             risk = Mathf.Max(0, risk);
             popularity = Mathf.Max(0, popularity);

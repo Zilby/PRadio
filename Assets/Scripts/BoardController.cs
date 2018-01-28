@@ -13,6 +13,7 @@ public class BoardController : MonoBehaviour {
     public Slider temperatureSlider;
     public SineWaveSpawner waveSpawner;
     public Transform impedanceLine;
+	public List<GameObject> kidExpressions;
 
     public AudioSource staticAudio;
     public AudioSource musicAudio;
