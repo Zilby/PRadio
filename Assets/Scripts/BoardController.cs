@@ -16,6 +16,7 @@ public class BoardController : MonoBehaviour {
 
     public AudioSource staticAudio;
     public AudioSource musicAudio;
+    public AudioSource tempAlarm;
 
     /// <summary>
     /// The current temperature. 
@@ -108,6 +109,7 @@ public class BoardController : MonoBehaviour {
                 + (interactionCounter > 0 ? INTERACTION_POWER_INCREASE : 0);
             temperature += power - COOLDOWN_RATE;
             temperature = Mathf.Max(0, temperature);
+            tempAlarm.volume = temperature / MAX_TEMPERATURE;
             temperatureSlider.value = temperature / 100.0f;
         }
     }
