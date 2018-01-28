@@ -16,10 +16,18 @@ public class Laser : MonoBehaviour {
     }
 
 	void OnCollisionEnter2D(Collision2D collider) {
-		Debug.Log ("Entered");
+		//Debug.Log ("Entered");
 		if (collider.gameObject.CompareTag("CopperNode")) {
 			Destroy(this.gameObject);
 		}
+	
 	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		if (collider.gameObject.CompareTag ("Goal")) {
+			Debug.Log ("Hit Goal");
+		}
+	}
+
 
 }
