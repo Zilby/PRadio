@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI riskText;
     public TextMeshProUGUI popText;
     public AudioSource sirenAudio;
+	public AudioSource commercial;
+	public AudioSource staticNoise;
+	public GameObject audioManager;
     public float changeValuesEvery;
     public GameObject sineWaveOverlay;
     public GameObject waveObj;
@@ -26,6 +29,8 @@ public class GameManager : MonoBehaviour {
 
     public delegate IEnumerator exitEvent();
     public static exitEvent Exiting;
+
+	public List<AudioClip> commercials;
 
     private int day;
 
@@ -50,7 +55,6 @@ public class GameManager : MonoBehaviour {
     }
     void Start() {
         StartCoroutine(SetupGamePhase());
-        StartCoroutine(ControlGamePhase());
         mainCanvas.useUnscaledDeltaTimeForUI = true;
         Pausing = Pause;
         Exiting = ExitFade;
@@ -67,14 +71,23 @@ public class GameManager : MonoBehaviour {
         this.board.RandomizeValues();
 
 		//play audio
-
-        board.Activated = true;
+		int i = Random.Range(0, commercials.Count);
+		commercial.clip = commercials[i];
+		commercial.Play();
+		while (commercial.isPlaying)
+		{
+			yield return null;
+		}
+		board.Activated = true;
         yield return mainCanvas.FadeIn();
+		staticNoise.Play();
+		audioManager.SetActive(true);
         sineWaveOverlay.SetActive(false);
         waveObj.SetActive(true);
-    }
+		StartCoroutine(ControlGamePhase());
+	}
 
-    private IEnumerator ChangeAudio() {
+	private IEnumerator ChangeAudio() {
         yield return new WaitForSeconds(changeValuesEvery);
         this.board.RandomizeValues();
     }
