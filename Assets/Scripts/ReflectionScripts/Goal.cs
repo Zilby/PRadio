@@ -8,6 +8,5 @@ public class Goal : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider) {
         // Success state
-
     }
 }
