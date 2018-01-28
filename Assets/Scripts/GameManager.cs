@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator SetupGamePhase() {
         day += 1;
-        if (day >= 1) {
+        if (day >= 2) {
             reflectButton.gameObject.SetActive(true);
         }
         this.reputation = day * DIFFICULTY_MODIFIER;
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour {
         this.targetPopularity = reputation * POP_OFFSET;
         changeValuesEvery -= reputation;
         changeValuesEvery = Mathf.Max(changeValuesEvery, 15f);
-        this.board.waveSpawner.InitTarget ();
+        this.board.waveSpawner.InitTarget();
         this.board.RandomizeValues();
 
         MainUI.StartText(1);
@@ -106,10 +106,10 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(ControlGamePhase());
     }
 
-	private IEnumerator ChangeAudio() {
+    private IEnumerator ChangeAudio() {
         while (true) {
-            this.board.RandomizeValues ();
-            yield return new WaitForSeconds (changeValuesEvery);
+            this.board.RandomizeValues();
+            yield return new WaitForSeconds(changeValuesEvery);
         }
     }
 
@@ -188,10 +188,10 @@ public class GameManager : MonoBehaviour {
         board.Activated = false;
         // fade to black code
         yield return ExitFade();
-		MainUI.End();
-		yield return new WaitForSecondsRealtime(3.0f);
-		// you lose
-		Debug.Log("Lose!");
+        MainUI.End();
+        yield return new WaitForSecondsRealtime(3.0f);
+        // you lose
+        Debug.Log("Lose!");
         SceneManager.LoadScene("Menu");
     }
 
