@@ -13,7 +13,7 @@ public class BoardController : MonoBehaviour {
     public Slider temperatureSlider;
     public SineWaveSpawner waveSpawner;
     public Transform impedanceLine;
-	public List<GameObject> kidExpressions;
+    public List<GameObject> kidExpressions;
 
     public AudioSource staticAudio;
     public AudioSource musicAudio;
@@ -60,19 +60,19 @@ public class BoardController : MonoBehaviour {
     private bool activated;
     public bool Activated
     {
-		get
-		{
-			return activated;
-		}
+        get
+        {
+            return activated;
+        }
         set
         {
             activated = value;
             if (activated) {
                 interactionCounter = 0;
                 StartCoroutine(SetTemperature());
-				StartCoroutine(ReduceInteractionPower());
-			}
-		}
+                StartCoroutine(ReduceInteractionPower());
+            }
+        }
     }
 
     private float Power
@@ -94,13 +94,19 @@ public class BoardController : MonoBehaviour {
         waveSpawner.amplitude = amplitude;
         waveSpawner.frequency = frequency;
         SetAudio();
-		ModifyAmplitude(amplitudeSlider.value);
-		ModifyFrequency(frequencySlider.value);
-		ModifyDistance(distanceSlider.value);
-		ModifyImpedance(impedanceSlider.value);
-	}
+        ModifyAmplitude(amplitudeSlider.value);
+        ModifyFrequency(frequencySlider.value);
+        ModifyDistance(distanceSlider.value);
+        ModifyImpedance(impedanceSlider.value);
+    }
 
-	private void AssignViewEvents() {
+    public void RestartCoroutines() {
+        interactionCounter = 0;
+        StartCoroutine(SetTemperature());
+        StartCoroutine(ReduceInteractionPower());
+    }
+
+    private void AssignViewEvents() {
         frequencySlider.onValueChanged.AddListener(ModifyFrequency);
         amplitudeSlider.onValueChanged.AddListener(ModifyAmplitude);
         impedanceSlider.onValueChanged.AddListener(ModifyImpedance);
