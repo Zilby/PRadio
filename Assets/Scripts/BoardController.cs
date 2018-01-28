@@ -59,14 +59,19 @@ public class BoardController : MonoBehaviour {
     private bool activated;
     public bool Activated
     {
+		get
+		{
+			return activated;
+		}
         set
         {
             activated = value;
             if (activated) {
                 interactionCounter = 0;
                 StartCoroutine(SetTemperature());
-            }
-        }
+				StartCoroutine(ReduceInteractionPower());
+			}
+		}
     }
 
     private float Power
@@ -87,7 +92,6 @@ public class BoardController : MonoBehaviour {
         AssignViewEvents();
         waveSpawner.amplitude = amplitude;
         waveSpawner.frequency = frequency;
-        StartCoroutine(ReduceInteractionPower());
         SetAudio();
     }
 
@@ -106,7 +110,7 @@ public class BoardController : MonoBehaviour {
     private IEnumerator SetTemperature() {
         while (activated) {
             yield return new WaitForSeconds(TEMPERATURE_CHANGE_RATE);
-            power = distance + (Mathf.Abs(targetImpedance - impedance)) / Mathf.Max(targetAmplitude, targetFrequency)
+            power = distance + (Mathf.Abs(targetImpedance - impedance) / Mathf.Max(targetAmplitude, targetFrequency))
                 + (interactionCounter > 0 ? INTERACTION_POWER_INCREASE : 0);
             temperature += power - COOLDOWN_RATE;
             temperature = Mathf.Max(0, temperature);

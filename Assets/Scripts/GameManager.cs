@@ -7,7 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour {
 
     const float DIFFICULTY_MODIFIER = 1.2f;
-    const float RISK_OFFSET = 1000.0f;
+    const float RISK_OFFSET = 200.0f;
     const float POP_OFFSET = 2000.0f;
 
     public ObjectPooler pooler;
@@ -29,14 +29,12 @@ public class GameManager : MonoBehaviour {
     private float maxRisk;
 
     private float targetPopularity;
-    // Popularity = (reputation * listeners)
     private float popularity;
 
     // Reputation increases after each "day"
     private float reputation = 0.0f;
 
-    // listeners = (distance * percentage correct signal)
-    private int listeners;
+    private float listeners;
 
     private float timer;
     private float lastChange;
@@ -49,18 +47,15 @@ public class GameManager : MonoBehaviour {
     }
     void Start() {
         StartCoroutine(SetupGamePhase());
+		StartCoroutine(ControlGamePhase());
     }
 
-    // Update is called once per frame
-    void Update() {
-        ControlGamePhase();
-    }
 
     private IEnumerator SetupGamePhase() {
         timer = 0.0f;
         day += 1;
         this.reputation = day * DIFFICULTY_MODIFIER;
-        this.maxRisk = reputation * RISK_OFFSET / (day * DIFFICULTY_MODIFIER);
+        this.maxRisk =  RISK_OFFSET / DIFFICULTY_MODIFIER;
         this.targetPopularity = reputation * POP_OFFSET / (day * DIFFICULTY_MODIFIER);
         this.board.RandomizeValues();
         board.Activated = true;
@@ -69,38 +64,41 @@ public class GameManager : MonoBehaviour {
         waveObj.SetActive(true);
     }
 
-    private void ControlGamePhase() {
-        timer += Time.deltaTime;
-        if (timer - lastChange > changeValuesEvery) {
-            lastChange = timer;
-            this.board.RandomizeValues();
-        }
-        if (this.board.PercentageWrong() < 0.1f) {
-            timeOfSafety = timer;
-        }
-        float distance = 10f * this.board.Distance;
-        this.risk = (this.reputation / 4.0f) * distance * (timer / 15.0f) / (timeOfSafety + 30f);
-        Debug.Log(risk);
-        this.listeners = Mathf.CeilToInt(this.reputation * distance * (timer / 10.0f));
-        Debug.Log(listeners);
-        float listenerFavor = 1 + (board.PercentageWrong() / 100f) - 0.6f;
-        this.popularity = this.listeners * listenerFavor;
-        Debug.Log(popularity);
-        DisplayText();
+    private IEnumerator ControlGamePhase() {
+		while (board.Activated)
+		{
+			timer += Time.deltaTime;
+			if (timer - lastChange > changeValuesEvery)
+			{
+				lastChange = timer;
+				this.board.RandomizeValues();
+			}
+			this.listeners += this.reputation * board.Distance * ((1 - board.PercentageWrong()) - 0.5f) * (1 + listeners/10);
+			this.risk += (this.reputation / 4.0f) * (board.Distance - 0.5f);
+			this.popularity = ((1 - board.PercentageWrong()) - 0.5f) * (1 + listeners / 10);
+			listeners = Mathf.Max(0, listeners);
+			risk = Mathf.Max(0, risk);
+			popularity = Mathf.Max(0, popularity);
+			DisplayText();
 
-        this.sirenAudio.volume = this.risk / this.maxRisk;
+			this.sirenAudio.volume = this.risk / this.maxRisk;
 
-        if (this.board.Overheated() || this.risk > this.maxRisk) {
-            this.LoseCondition();
-        } else if (this.popularity > this.targetPopularity) {
-            this.WinCondition();
-        }
-    }
+			if (this.board.Overheated() || this.risk > this.maxRisk)
+			{
+				yield return LoseCondition();
+			}
+			else if (this.popularity > this.targetPopularity)
+			{
+				this.WinCondition();
+			}
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
 
-    private void DisplayText() {
-        listenersText.text = "Listeners " + listeners.ToString();
-        popText.text = "Popularity " + popularity.ToString();
-        riskText.text = "Risk " + risk.ToString();
+	private void DisplayText() {
+        listenersText.text = "Listeners\n" + Mathf.CeilToInt(listeners).ToString();
+        popText.text = "Popularity\n" + popularity.ToString();
+        riskText.text = "Risk\n" + risk.ToString();
     }
 
     public void Pause() {
@@ -116,11 +114,11 @@ public class GameManager : MonoBehaviour {
         Start();
     }
 
-    private void LoseCondition() {
+    private IEnumerator LoseCondition() {
         Pause();
         board.Activated = false;
         // fade to black code
-        StartCoroutine(mainCanvas.FadeIn());
+        yield return mainCanvas.FadeIn();
         sineWaveOverlay.SetActive(false);
         waveObj.SetActive(true);
         // you lose
