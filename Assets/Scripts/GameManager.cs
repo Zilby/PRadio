@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour {
         changeValuesEvery -= reputation;
         changeValuesEvery = Mathf.Max(changeValuesEvery, 15f);
         this.board.RandomizeValues();
+
+		//play audio
+
         board.Activated = true;
         yield return mainCanvas.FadeIn();
         sineWaveOverlay.SetActive(false);
