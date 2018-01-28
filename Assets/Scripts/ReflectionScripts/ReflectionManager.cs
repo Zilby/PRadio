@@ -26,10 +26,11 @@ public class ReflectionManager : MonoBehaviour {
 
     public void StartReflectionLevel() {
         if (!started) {
-            levelInstance = Instantiate(levels[Random.Range(0, levels.Count)], screen.transform.position, Quaternion.identity);
+            levelInstance = Instantiate(levels[Random.Range(0, levels.Count)]);
             levelInstance.transform.SetParent(screen.transform);
             StartCoroutine(MoveLevelOn());
             started = true;
+            GameManager.instance.board.gameObject.SetActive(false);
         }
     }
 
@@ -50,6 +51,8 @@ public class ReflectionManager : MonoBehaviour {
             yield return null;
         }
         started = false;
+        GameManager.instance.board.gameObject.SetActive(true);
+        GameManager.instance.board.RestartCoroutines();
     }
 
     public void EndLevel() {

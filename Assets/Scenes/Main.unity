@@ -390,10 +390,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 1255991734496166, guid: 01445cdb1dd2b46aca77b3f5b565ed8f, type: 2}
+  - {fileID: 1574500972720512, guid: bb4693545233340578671c3befb9e685, type: 2}
   screen: {fileID: 1324547791}
   offpos: {x: -20, y: 0, z: 0}
   onPos: {x: -2.5, y: 1, z: 0}
-  speed: 2.5
+  speed: 6
 --- !u!4 &95323515
 Transform:
   m_ObjectHideFlags: 0
