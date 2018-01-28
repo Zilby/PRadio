@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour {
 		}
 		board.Activated = true;
         yield return mainCanvas.FadeIn();
+		MainUI.StartText(0);
 		staticNoise.Play();
 		audioManager.SetActive(true);
         sineWaveOverlay.SetActive(false);

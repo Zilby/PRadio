@@ -89,11 +89,14 @@ public class MainUI : MonoBehaviour {
 		SetExpression(Expression.neutral);
 		SetExpression(Expression.listening);
 		yield return new WaitForSecondsRealtime(0.5f);
-		yield return sempaiText.TypeText("Hello, I am radio sempai, welcome to Resist & Transmit");
+		yield return sempaiText.TypeText("Welcome to the team.We’ve got a rocky relationship with the coppers, so you should be aware of what you’re getting into before you start.");
 		yield return new WaitForSecondsRealtime(2.0f);
 		SetExpression(Expression.happy);
-		yield return kidText.TypeText("Good to meet you radio sempai!");
-		yield return new WaitForSecondsRealtime(2.0f);
+		yield return kidText.TypeText("Lay it on me.");
+		yield return new WaitForSecondsRealtime(1.5f);
+		SetExpression(Expression.neutral);
+		SetExpression(Expression.listening);
+		yield return sempaiText.TypeText("");
 		FinishText();
 	}
 
