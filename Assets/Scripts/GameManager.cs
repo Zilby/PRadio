@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI riskText;
     public TextMeshProUGUI popText;
     public AudioSource sirenAudio;
+    public float changeValuesEvery;
 
     private int day;
 
@@ -34,6 +35,10 @@ public class GameManager : MonoBehaviour {
     // listeners = (distance * percentage correct signal)
     private int listeners;
 
+    private float timer;
+    private float lastChange;
+    private float timeOfSafety;
+
     // Use this for initialization
 
     void Awake() {
@@ -49,6 +54,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void SetupGamePhase() {
+        timer = 0.0f;
         day += 1;
         this.reputation = day * DIFFICULTY_MODIFIER;
         this.maxRisk = reputation * RISK_OFFSET / (day * DIFFICULTY_MODIFIER);
@@ -58,9 +64,22 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ControlGamePhase() {
-        this.risk = this.reputation * this.board.Distance;
-        this.listeners = Mathf.CeilToInt((1 - this.board.PercentageWrong()) * this.board.Distance);
-        this.popularity = this.reputation * this.listeners;
+        timer += Time.deltaTime;
+        if (timer - lastChange > changeValuesEvery) {
+            lastChange = timer;
+            this.board.RandomizeValues();
+        }
+        if (this.board.PercentageWrong() < 0.1f) {
+            timeOfSafety = timer;
+        }
+        float distance = 10f * this.board.Distance;
+        this.risk = (this.reputation / 4.0f) * distance * (timer / 15.0f) / (timeOfSafety + 30f);
+        Debug.Log(risk);
+        this.listeners = Mathf.CeilToInt(this.reputation * distance * (timer / 10.0f));
+        Debug.Log(listeners);
+        float listenerFavor = 1 + (board.PercentageWrong() / 100f) - 0.6f;
+        this.popularity = this.listeners * listenerFavor;
+        Debug.Log(popularity);
         DisplayText();
 
         this.sirenAudio.volume = this.risk / this.maxRisk;
@@ -73,9 +92,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void DisplayText() {
-        listenersText.text = listeners.ToString();
-        popText.text = popularity.ToString();
-        riskText.text = risk.ToString();
+        listenersText.text = "Listeners " + listeners.ToString();
+        popText.text = "Popularity " + popularity.ToString();
+        riskText.text = "Risk " + risk.ToString();
     }
 
     public void Pause() {

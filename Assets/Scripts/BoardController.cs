@@ -134,6 +134,7 @@ public class BoardController : MonoBehaviour {
         RandomizeFrequency();
         RandomizeAmplitude();
         this.RandomizeImpedance();
+        SetAudio();
     }
 
     public void RandomizeFrequency() {
@@ -184,13 +185,7 @@ public class BoardController : MonoBehaviour {
     }
 
     public float PercentageWrong() {
-        float wrong = (Mathf.Abs(targetAmplitude - amplitude) / targetAmplitude + Mathf.Abs(targetFrequency - frequency) / targetFrequency) / 2.0f;
-        if (wrong < 0) {
-            return 0;
-        }
-        if (wrong > 1) {
-            return 1;
-        }
+        float wrong = Mathf.Clamp((Mathf.Abs(targetAmplitude - amplitude) / targetAmplitude + Mathf.Abs(targetFrequency - frequency) / targetFrequency) / 2.0f, 0f, 1f);
         return wrong;
     }
 
