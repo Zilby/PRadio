@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour {
 	public delegate void pauseEvent();
 	public static pauseEvent Pausing;
 
+	public delegate IEnumerator exitEvent();
+	public static exitEvent Exiting;
+
     private int day;
 
     // Risk = (reputation * distance)
@@ -52,7 +55,8 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(SetupGamePhase());
 		StartCoroutine(ControlGamePhase());
 		mainCanvas.useUnscaledDeltaTimeForUI = true;
-		Pausing += Pause;
+		Pausing = Pause;
+		Exiting = ExitFade;
     }
 
 
@@ -122,13 +126,18 @@ public class GameManager : MonoBehaviour {
     private IEnumerator LoseCondition() {
         Pause();
         board.Activated = false;
-        // fade to black code
-        sineWaveOverlay.SetActive(true);
-        waveObj.SetActive(false);
-		ObjectPooler.instance.DisableAllTagged("WaveBar");
-		yield return mainCanvas.FadeOut();
+		// fade to black code
+		yield return ExitFade();
 		// you lose
 		Debug.Log("Lose!");
         SceneManager.LoadScene("Menu");
     }
+
+	public IEnumerator ExitFade()
+	{
+		sineWaveOverlay.SetActive(true);
+		waveObj.SetActive(false);
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
+		yield return mainCanvas.FadeOut();
+	}
 }

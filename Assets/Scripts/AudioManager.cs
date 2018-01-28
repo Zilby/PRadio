@@ -16,15 +16,6 @@ public class AudioManager : MonoBehaviour {
     private float originalVolume;
     private bool paused;
 
-    void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else if (instance != this) {
-            Destroy(instance.gameObject);
-            instance = this;
-        }
-        DontDestroyOnLoad(gameObject);
-    }
 
     void Start() {
         musicSource = gameObject.GetComponent<AudioSource>();
