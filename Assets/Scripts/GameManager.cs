@@ -52,12 +52,12 @@ public class GameManager : MonoBehaviour {
 
     void Awake() {
         Instantiate(pooler);
-    }
+		Pausing = Pause;
+		Exiting = ExitFade;
+	}
     void Start() {
         StartCoroutine(SetupGamePhase());
         mainCanvas.useUnscaledDeltaTimeForUI = true;
-        Pausing = Pause;
-        Exiting = ExitFade;
     }
 
 
@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour {
         changeValuesEvery -= reputation;
         changeValuesEvery = Mathf.Max(changeValuesEvery, 15f);
         this.board.RandomizeValues();
+
+		MainUI.StartText(1);
+		yield return new WaitForSecondsRealtime(5.0f);
 
 		//play audio
 		int i = Random.Range(0, commercials.Count);

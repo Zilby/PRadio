@@ -15,6 +15,7 @@ public class MainUI : MonoBehaviour {
 		meh, 
 		listening, 
 		pointing,
+		noKid,
 	}
 
 	public Button pauseButton;
@@ -36,10 +37,10 @@ public class MainUI : MonoBehaviour {
 
 	private delegate IEnumerator dialogueEvent();
 	private List<dialogueEvent> dialogues;
-	private dialogueEvent dialogue0;
+	private dialogueEvent dialogue0, dialogue1, dialogue2, dialogue3;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		pauseButton.onClick.AddListener(Pause);
 		quitButton.onClick.AddListener(Quit);
 		menuButton.onClick.AddListener(Menu);
@@ -47,7 +48,8 @@ public class MainUI : MonoBehaviour {
 		StartText = BeginText;
 		EndText = FinishText;
 		dialogue0 = Dialogue0;
-		dialogues = new List<dialogueEvent>() { dialogue0 };
+		dialogue1 = Dialogue1;
+		dialogues = new List<dialogueEvent>() { dialogue0, dialogue1, dialogue2, dialogue3};
 		overlay.useUnscaledDeltaTimeForUI = true;
 		textOverlay.useUnscaledDeltaTimeForUI = true;
 	}
@@ -150,7 +152,20 @@ public class MainUI : MonoBehaviour {
 	}
 
 
-	private void Pause()
+	private IEnumerator Dialogue1()
+	{
+		SetExpression(Expression.noKid);
+		SetExpression(Expression.listening);
+		yield return new WaitForSecondsRealtime(4.0f);
+		SetExpression(Expression.pointing);
+		yield return sempaiText.TypeText("You ready for this, kid?");
+		yield return new WaitForSecondsRealtime(2.0f);
+
+		FinishText();
+	}
+
+
+		private void Pause()
 	{
 		GameManager.Pausing();
 		if(Time.timeScale == 0.0f)
@@ -232,6 +247,10 @@ public class MainUI : MonoBehaviour {
 				}
 				break;
 			default:
+				for (int i = 0; i < kids.Count; ++i)
+				{
+					kids[i].SetActive(false);
+				}
 				break;
 		}
 	}
