@@ -100,12 +100,12 @@ public class GameManager : MonoBehaviour {
     private void LoseCondition() {
         Pause();
         board.Activated = false;
-        // fade to black code
-        // you lose
-        Debug.Log("Lose!");
-        SceneManager.LoadScene("Menu");
+		// fade to black code
 		StartCoroutine(mainCanvas.FadeIn());
 		sineWaveOverlay.SetActive(false);
 		waveObj.SetActive(true);
+		// you lose
+		Debug.Log("Lose!");
+        SceneManager.LoadScene("Menu");
 	}
 }
