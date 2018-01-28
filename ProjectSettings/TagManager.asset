@@ -8,6 +8,8 @@ TagManager:
   - Lazer
   - CopperNode
   - Goal
+  - Undefined
+  - ring
   layers:
   - Default
   - TransparentFX
