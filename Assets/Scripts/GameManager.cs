@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour {
     void Start() {
         StartCoroutine(SetupGamePhase());
 		StartCoroutine(ControlGamePhase());
+		mainCanvas.useUnscaledDeltaTimeForUI = true;
     }
 
 
@@ -118,11 +119,12 @@ public class GameManager : MonoBehaviour {
         Pause();
         board.Activated = false;
         // fade to black code
-        yield return mainCanvas.FadeIn();
-        sineWaveOverlay.SetActive(false);
-        waveObj.SetActive(true);
-        // you lose
-        Debug.Log("Lose!");
+        sineWaveOverlay.SetActive(true);
+        waveObj.SetActive(false);
+		ObjectPooler.instance.DisableAllTagged("WaveBar");
+		yield return mainCanvas.FadeOut();
+		// you lose
+		Debug.Log("Lose!");
         SceneManager.LoadScene("Menu");
     }
 }
