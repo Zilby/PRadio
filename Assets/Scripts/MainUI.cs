@@ -240,8 +240,18 @@ public class MainUI : MonoBehaviour {
 
 	private void WinGame()
 	{
+		StartCoroutine(ActualWinGame());
+		
+
+	}
+
+
+	private IEnumerator ActualWinGame()
+	{
 		win.useUnscaledDeltaTimeForUI = true;
-		win.SelfFadeIn();
+		yield return win.FadeIn();
+		yield return new WaitForSecondsRealtime(4.0f);
+		yield return win.FadeOut();
 		SceneManager.LoadScene("Menu");
 	}
 

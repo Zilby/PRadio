@@ -144,7 +144,8 @@ public class GameManager : MonoBehaviour {
 			{
 				yield return LoseCondition();
 			}
-            if (this.popularity > this.targetPopularity) {
+			if (this.popularity > this.targetPopularity) 
+			{
                 this.WinCondition();
             }
             yield return new WaitForSeconds(0.5f);
@@ -172,6 +173,7 @@ public class GameManager : MonoBehaviour {
     private void WinCondition() {
         Pause();
         board.Activated = false;
+		StartCoroutine(ExitFade());
 		MainUI.Win();
         // Fade to black code
         // Show good job
