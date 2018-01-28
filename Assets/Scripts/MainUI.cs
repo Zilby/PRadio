@@ -252,7 +252,7 @@ public class MainUI : MonoBehaviour {
 		yield return win.FadeIn();
 		yield return new WaitForSecondsRealtime(4.0f);
 		yield return win.FadeOut();
-		SceneManager.LoadScene("Menu");
+		//SceneManager.LoadScene("Menu");
 	}
 
 

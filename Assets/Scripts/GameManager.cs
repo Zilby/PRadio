@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour {
 			}
 			if (this.popularity > this.targetPopularity) 
 			{
-                this.WinCondition();
+                yield return WinCondition();
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -170,17 +170,20 @@ public class GameManager : MonoBehaviour {
         risk += 1f;
     }
 
-    private void WinCondition() {
+    private IEnumerator WinCondition() {
         Pause();
         board.Activated = false;
 		StartCoroutine(ExitFade());
 		MainUI.Win();
-        // Fade to black code
-        // Show good job
-        Debug.Log("Win!!");
-    }
+		// Fade to black code
+		// Show good job
+		yield return new WaitForSecondsRealtime(4);
+		Debug.Log("Win!!");
+		yield return SetupGamePhase();
 
-    private IEnumerator LoseCondition() {
+	}
+
+	private IEnumerator LoseCondition() {
         Pause();
         board.Activated = false;
         // fade to black code
