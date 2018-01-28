@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI riskText;
     public TextMeshProUGUI popText;
     public AudioSource sirenAudio;
+	public GameObject sineWaveOverlay;
+	public GameObject waveObj;
+	public FadeableUI mainCanvas;
 
     private int day;
 
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour {
         Instantiate(pooler);
     }
     void Start() {
-        this.SetupGamePhase();
+        StartCoroutine(SetupGamePhase());
     }
 
     // Update is called once per frame
@@ -48,14 +51,17 @@ public class GameManager : MonoBehaviour {
         ControlGamePhase();
     }
 
-    private void SetupGamePhase() {
+    private IEnumerator SetupGamePhase() {
         day += 1;
         this.reputation = day * DIFFICULTY_MODIFIER;
         this.maxRisk = reputation * RISK_OFFSET / (day * DIFFICULTY_MODIFIER);
         this.targetPopularity = reputation * POP_OFFSET / (day * DIFFICULTY_MODIFIER);
         this.board.RandomizeValues();
         board.Activated = true;
-    }
+		yield return mainCanvas.FadeIn();
+		sineWaveOverlay.SetActive(false);
+		waveObj.SetActive(true);
+	}
 
     private void ControlGamePhase() {
         this.risk = this.reputation * this.board.Distance;
@@ -89,7 +95,7 @@ public class GameManager : MonoBehaviour {
         // Show good job
         Debug.Log("Win!!");
         Start();
-    }
+	}
 
     private void LoseCondition() {
         Pause();
@@ -98,5 +104,8 @@ public class GameManager : MonoBehaviour {
         // you lose
         Debug.Log("Lose!");
         SceneManager.LoadScene("Menu");
-    }
+		StartCoroutine(mainCanvas.FadeIn());
+		sineWaveOverlay.SetActive(false);
+		waveObj.SetActive(true);
+	}
 }
