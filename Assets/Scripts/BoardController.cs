@@ -10,7 +10,7 @@ public class BoardController : MonoBehaviour {
     public Slider amplitudeSlider;
     public Slider impedanceSlider;
     public Slider distanceSlider;
-    public TextMeshProUGUI temperatureText;
+    public Slider temperatureSlider;
     public SineWaveSpawner waveSpawner;
     public Transform impedanceLine;
 
@@ -109,8 +109,8 @@ public class BoardController : MonoBehaviour {
                 + (interactionCounter > 0 ? INTERACTION_POWER_INCREASE : 0);
             temperature += power - COOLDOWN_RATE;
             temperature = Mathf.Max(0, temperature);
-            temperatureText.text = temperature.ToString();
             tempAlarm.volume = temperature / MAX_TEMPERATURE;
+            temperatureSlider.value = temperature / 100.0f;
         }
     }
 
