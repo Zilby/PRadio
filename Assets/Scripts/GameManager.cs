@@ -171,6 +171,7 @@ public class GameManager : MonoBehaviour {
     private void WinCondition() {
         Pause();
         board.Activated = false;
+        StartCoroutine(ExitFade());
         MainUI.Win();
         // Fade to black code
         // Show good job
