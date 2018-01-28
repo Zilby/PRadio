@@ -176,4 +176,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b327110037b48148fee06d75a83e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  momentum: {x: -200, y: 0}
+  momentum: {x: 0, y: 0}
