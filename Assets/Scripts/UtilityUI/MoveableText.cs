@@ -25,6 +25,14 @@ public class MoveableText : MonoBehaviour
 		text.text = "";
 	}
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			skip = true;
+		}
+	}
+
 	public IEnumerator TypeText(string message)
 	{
 		string current = "";

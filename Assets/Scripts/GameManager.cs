@@ -62,13 +62,13 @@ public class GameManager : MonoBehaviour {
         }
         instance = this;
         Instantiate(pooler);
+        Pausing = Pause;
+        Exiting = ExitFade;
     }
     void Start() {
         reflectButton.gameObject.SetActive(false);
         StartCoroutine(SetupGamePhase());
         mainCanvas.useUnscaledDeltaTimeForUI = true;
-        Pausing = Pause;
-        Exiting = ExitFade;
     }
 
 
@@ -83,6 +83,9 @@ public class GameManager : MonoBehaviour {
         changeValuesEvery -= reputation;
         changeValuesEvery = Mathf.Max(changeValuesEvery, 15f);
         this.board.RandomizeValues();
+
+        MainUI.StartText(1);
+        yield return new WaitForSecondsRealtime(5.0f);
 
         //play audio
         int i = Random.Range(0, commercials.Count);
