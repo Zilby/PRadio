@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 
     const float DIFFICULTY_MODIFIER = 1.2f;
     const float RISK_OFFSET = 100.0f;
-    const float POP_OFFSET = 1200.0f;
+    const float POP_OFFSET = 500.0f;
 
     public Slider riskSlider;
     public Slider popSlider;
