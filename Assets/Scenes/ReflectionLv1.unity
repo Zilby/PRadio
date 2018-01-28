@@ -832,6 +832,11 @@ Prefab:
       propertyPath: m_Name
       value: Mirror (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 61307612320012454, guid: f578f8020765549ee8ff4b30cc47104d,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f578f8020765549ee8ff4b30cc47104d, type: 2}
   m_IsPrefabParent: 0
@@ -931,6 +936,14 @@ Prefab:
     - target: {fileID: 4143355903844460, guid: f578f8020765549ee8ff4b30cc47104d, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f578f8020765549ee8ff4b30cc47104d, type: 2}
