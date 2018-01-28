@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour {
     void Start() {
         reflectButton.gameObject.SetActive(false);
         StartCoroutine(SetupGamePhase());
+        StartCoroutine(ChangeAudio());
         mainCanvas.useUnscaledDeltaTimeForUI = true;
     }
 
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour {
         this.targetPopularity = reputation * POP_OFFSET;
         changeValuesEvery -= reputation;
         changeValuesEvery = Mathf.Max(changeValuesEvery, 15f);
+        this.board.waveSpawner.InitTarget ();
         this.board.RandomizeValues();
 
         MainUI.StartText(1);
@@ -104,9 +106,11 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(ControlGamePhase());
     }
 
-    private IEnumerator ChangeAudio() {
-        yield return new WaitForSeconds(changeValuesEvery);
-        this.board.RandomizeValues();
+	private IEnumerator ChangeAudio() {
+        while (true) {
+            this.board.RandomizeValues ();
+            yield return new WaitForSeconds (changeValuesEvery);
+        }
     }
 
     private IEnumerator ControlGamePhase() {

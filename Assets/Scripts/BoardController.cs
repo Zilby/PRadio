@@ -146,8 +146,10 @@ public class BoardController : MonoBehaviour {
     }
 
     public void RandomizeValues() {
+        Debug.Log ("Randomizing");
         RandomizeFrequency();
         RandomizeAmplitude();
+        waveSpawner.targetWave.NewTarget (targetAmplitude, targetFrequency);
         this.RandomizeImpedance();
         SetAudio();
     }

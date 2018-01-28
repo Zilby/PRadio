@@ -84,7 +84,7 @@ public class MainUI : MonoBehaviour {
         SetExpression(Expression.neutral);
         SetExpression(Expression.listening);
         yield return new WaitForSecondsRealtime(0.5f);
-        yield return sempaiText.TypeText("Welcome to the team.We’ve got a rocky relationship with the coppers, so you should be aware of what you’re getting into before you start");
+        yield return sempaiText.TypeText("Welcome to the team. We’ve got a rocky relationship with the coppers, so you should be aware of what you’re getting into before you start");
         yield return new WaitForSecondsRealtime(2.0f);
         sempaiText.ClearText();
         SetExpression(Expression.happy);

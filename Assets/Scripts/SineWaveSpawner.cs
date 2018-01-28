@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SineWaveSpawner : MonoBehaviour {
 
+    public TargetWave targetWave;
+
     public float cappedAmplitude;
     public int numBars;
 
@@ -26,7 +28,7 @@ public class SineWaveSpawner : MonoBehaviour {
         if (amplitude > cappedAmplitude) {
             amplitude = cappedAmplitude;
         }
-        return amplitude * Mathf.Sin(frequency * x);
+        return amplitude * Mathf.Sin(x);
     }
 
     void Start() {
@@ -41,7 +43,7 @@ public class SineWaveSpawner : MonoBehaviour {
     public IEnumerator SpawnLoop() {
         while (!paused) {
             yield return new WaitForSeconds(spawnTime);
-            this.curX += this.baseFrequency;
+            this.curX += this.baseFrequency * frequency;
             float sin = this.SinFunction(this.curX);
             spawnBar(sin, 1, 0);
             spawnBar(sin, -1, 0);
@@ -58,6 +60,10 @@ public class SineWaveSpawner : MonoBehaviour {
             bar.transform.localScale = new Vector3(this.transform.lossyScale.x * 0.65f, this.transform.lossyScale.y, this.transform.lossyScale.z);
             bar.gameObject.SetActive(true);
         }
+    }
+
+    public void InitTarget() {
+        targetWave.Init (this, barWidth);
     }
 
 }
