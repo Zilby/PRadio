@@ -149,7 +149,7 @@ public class BoardController : MonoBehaviour {
     public void RandomizeValues() {
         RandomizeFrequency();
         RandomizeAmplitude();
-        waveSpawner.targetWave.NewTarget (targetAmplitude, targetFrequency);
+        waveSpawner.targetWave.NewTarget(targetAmplitude, targetFrequency);
         this.RandomizeImpedance();
         SetAudio();
     }

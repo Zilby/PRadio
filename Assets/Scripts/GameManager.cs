@@ -12,7 +12,10 @@ public class GameManager : MonoBehaviour {
 
     const float DIFFICULTY_MODIFIER = 1.2f;
     const float RISK_OFFSET = 100.0f;
-    const float POP_OFFSET = 1200.0f;
+    const float POP_OFFSET = 500.0f;
+
+    public Slider riskSlider;
+    public Slider popSlider;
 
     public ObjectPooler pooler;
     public BoardController board;
@@ -144,7 +147,7 @@ public class GameManager : MonoBehaviour {
                 yield return LoseCondition();
             }
             if (this.popularity > this.targetPopularity) {
-                this.WinCondition();
+                yield return WinCondition();
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -152,8 +155,10 @@ public class GameManager : MonoBehaviour {
 
     private void DisplayText() {
         listenersText.text = "Listeners\n" + Mathf.CeilToInt(listeners).ToString();
-        popText.text = "Popularity\n" + popularity.ToString();
-        riskText.text = "Risk\n" + risk.ToString();
+        popText.text = "Popularity";
+        riskText.text = "Risk";
+        riskSlider.value = risk / maxRisk;
+        popSlider.value = popularity / targetPopularity;
     }
 
     private void Pause() {
@@ -168,14 +173,17 @@ public class GameManager : MonoBehaviour {
         risk += 1f;
     }
 
-    private void WinCondition() {
+    private IEnumerator WinCondition() {
         Pause();
         board.Activated = false;
         StartCoroutine(ExitFade());
         MainUI.Win();
         // Fade to black code
         // Show good job
+        yield return new WaitForSecondsRealtime(4);
         Debug.Log("Win!!");
+        yield return SetupGamePhase();
+
     }
 
     private IEnumerator LoseCondition() {
@@ -187,6 +195,7 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSecondsRealtime(3.0f);
         // you lose
         Debug.Log("Lose!");
+		Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }
 

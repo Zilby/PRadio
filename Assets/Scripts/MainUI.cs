@@ -60,15 +60,6 @@ public class MainUI : MonoBehaviour {
         textOverlay.useUnscaledDeltaTimeForUI = true;
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            BeginText(0);
-        }
-        if (Input.GetKeyDown(KeyCode.W)) {
-            EndText();
-        }
-    }
-
     private void BeginText(int i) {
         GameManager.Pausing();
         pauseButton.gameObject.SetActive(false);
@@ -252,7 +243,7 @@ public class MainUI : MonoBehaviour {
 		yield return win.FadeIn();
 		yield return new WaitForSecondsRealtime(4.0f);
 		yield return win.FadeOut();
-		SceneManager.LoadScene("Menu");
+		//SceneManager.LoadScene("Menu");
 	}
 
 
