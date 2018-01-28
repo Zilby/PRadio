@@ -195,6 +195,7 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSecondsRealtime(3.0f);
         // you lose
         Debug.Log("Lose!");
+		Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }
 
